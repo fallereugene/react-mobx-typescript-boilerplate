@@ -1,1 +1,1 @@
-# react-redux-typescript-boilerplate
+# react-mobx-typescript-boilerplate
