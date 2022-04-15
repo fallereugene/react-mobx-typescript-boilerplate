@@ -10,35 +10,32 @@ class RootStore {
 
     isFetching = true;
 
-    root;
-
-    constructor(root: Store) {
-        makeAutoObservable(this);
-        this.root = root;
+    constructor(private root: Store) {
+        makeAutoObservable(this, {}, { autoBind: true });
     }
 
-    setState = (state: RootState) => {
+    setState(state: RootState) {
         this.state = state;
-    };
+    }
 
-    removeRequestError = (error: string) => {
+    removeRequestError(error: string) {
         this.requestErrors = this.requestErrors.filter((i) => i !== error);
-    };
+    }
 
-    setFetchingState = (isFetching: boolean) => {
+    setFetchingState(isFetching: boolean) {
         this.isFetching = isFetching;
-    };
+    }
 
-    setRequestError = (error: string) => {
+    setRequestError(error: string) {
         this.requestErrors = [...this.requestErrors, error];
-    };
+    }
 
-    responseErrorInterceptor = (error: AxiosError) => {
+    responseErrorInterceptor(error: AxiosError) {
         const xCorrelationId = error.response?.request.requestHeaders['X-Correlation-ID'];
         if (xCorrelationId) {
             this.requestErrors = [...this.requestErrors, xCorrelationId];
         }
-    };
+    }
 }
 
 export default RootStore;

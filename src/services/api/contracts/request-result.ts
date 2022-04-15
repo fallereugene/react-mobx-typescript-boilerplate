@@ -45,4 +45,4 @@ export type RequestResultOtherErrors = IBaseRequestResultError<
 export type RequestResultSuccess<TData> = IRequestResultSuccess<TData>;
 export type RequestResultError = RequestResultOtherErrors;
 
-export type RequestResult<TData> = RequestResultSuccess<TData> | RequestResultError;
+export type RequestResult<TData = void> = RequestResultSuccess<TData> | RequestResultError;

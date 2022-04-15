@@ -1,16 +1,11 @@
-import { makeAutoObservable } from 'mobx';
 import RootStore from '@containers/root/store';
 import MainStore from '@routes/main/store';
 import { API } from '@services/api';
 
 export class Store {
-    rootStore: RootStore;
+    rootStore = new RootStore(this);
 
-    mainStore: MainStore;
+    mainStore = new MainStore(this);
 
-    constructor(public api: API) {
-        this.rootStore = new RootStore(this);
-        this.mainStore = new MainStore(this);
-        makeAutoObservable(this);
-    }
+    constructor(public api: API) {}
 }

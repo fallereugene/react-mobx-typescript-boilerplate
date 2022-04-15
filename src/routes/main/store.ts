@@ -7,36 +7,32 @@ import { invokeApi } from '@/utils';
 class MainStore {
     tasks: ITask[] = [];
 
-    root;
-
-    constructor(root: Store) {
-        makeAutoObservable(this);
+    constructor(private root: Store) {
+        makeAutoObservable(this, {}, { autoBind: true });
         this.root = root;
     }
 
-    init = async () => {
+    async init() {
         const { api } = this.root;
         const { setFetchingState } = this.root.rootStore;
         setFetchingState(true);
         await invokeApi(api.todos.getList(), {
-            onSuccess: (result) => {
-                result.data && this.setList(result.data);
-            },
+            onSuccess: (result) => this.setList(result.data),
         });
         setFetchingState(false);
-    };
+    }
 
-    createTask = async (title: string) => {
+    async createTask(title: string) {
         const { api } = this.root;
         const { setFetchingState } = this.root.rootStore;
         setFetchingState(true);
         await invokeApi(api.todos.createTask({ title }), {
-            onSuccess: (result) => result.data && this.addTask(title),
+            onSuccess: () => this.addTask(title),
         });
         setFetchingState(false);
-    };
+    }
 
-    deleteTask = async (id: string) => {
+    async deleteTask(id: string) {
         const { api } = this.root;
         const { setFetchingState } = this.root.rootStore;
         setFetchingState(true);
@@ -44,9 +40,9 @@ class MainStore {
             onSuccess: () => this.setList(this.tasks.filter((i) => i.id !== id)),
         });
         setFetchingState(false);
-    };
+    }
 
-    addTask = (task: string) => {
+    addTask(task: string) {
         const newTask: ITask = {
             title: task,
             completed: false,
@@ -54,11 +50,11 @@ class MainStore {
             id: uuidv4(),
         };
         this.tasks = [newTask, ...this.tasks];
-    };
+    }
 
-    setList = (list: ITask[]) => {
+    setList(list: ITask[]) {
         this.tasks = list;
-    };
+    }
 }
 
 export default MainStore;

@@ -2,8 +2,10 @@ import { RequestResult, RequestResultError, RequestResultSuccess } from '@/servi
 
 export type ActionConfig<
     TResult extends RequestResult<any>,
-    TResultData = TResult['data'] extends null ? never : Omit<RequestResultSuccess<TResult['data']>, 'error'>,
-    TErrorData = TResult['error'] extends null ? never : RequestResultError
+    TResultData = TResult extends RequestResultSuccess<any>
+        ? Omit<RequestResultSuccess<TResult['data']>, 'error'>
+        : never,
+    TErrorData = TResult extends RequestResultError ? Omit<RequestResultError, 'data'> : never
 > = {
     onSuccess?(requestResultData: TResultData): void;
     onError?(requestErrorData: TErrorData): void;
@@ -23,11 +25,10 @@ const invokeApi = async <
 
     if (config) {
         const { onError, onSuccess } = config;
+
         if (result.error) {
-            // TODO: Check any type
             onError && onError(result as any);
         } else {
-            // TODO: Check any type
             onSuccess && onSuccess(result as any);
         }
     }
