@@ -7,39 +7,51 @@ export default abstract class BaseModule {
 
     protected async get<TReturn>(url: string): Promise<RequestResult<TReturn>> {
         const xCorrelationID = BaseModule.generateXCorrelationID();
-        return BaseModule.invoke(
+        return BaseModule.invoke<TReturn>(
             this.http.get(`${this.config.baseUrl}${url}`, this.getConfig(xCorrelationID)),
             xCorrelationID,
         );
     }
 
-    protected async post<TReturn, TData extends {} = {}>(url: string, data: TData): Promise<RequestResult<TReturn>> {
+    protected async post<TReturn = void, TData extends {} = {}>(
+        url: string,
+        data: TData,
+    ): Promise<RequestResult<TReturn>> {
         const xCorrelationID = BaseModule.generateXCorrelationID();
-        return BaseModule.invoke(
+        return BaseModule.invoke<TReturn>(
             this.http.post(`${this.config.baseUrl}${url}`, data, this.getConfig(xCorrelationID)),
             xCorrelationID,
         );
     }
 
-    protected async put<TReturn, TData extends {} = {}>(url: string, data: TData): Promise<RequestResult<TReturn>> {
+    protected async put<TReturn = void, TData extends {} = {}>(
+        url: string,
+        data: TData,
+    ): Promise<RequestResult<TReturn>> {
         const xCorrelationID = BaseModule.generateXCorrelationID();
-        return BaseModule.invoke(
+        return BaseModule.invoke<TReturn>(
             this.http.put(`${this.config.baseUrl}${url}`, data, this.getConfig(xCorrelationID)),
             xCorrelationID,
         );
     }
 
-    protected async patch<TReturn, TData extends {} = {}>(url: string, data: TData): Promise<RequestResult<TReturn>> {
+    protected async patch<TReturn = void, TData extends {} = {}>(
+        url: string,
+        data: TData,
+    ): Promise<RequestResult<TReturn>> {
         const xCorrelationID = BaseModule.generateXCorrelationID();
-        return BaseModule.invoke(
+        return BaseModule.invoke<TReturn>(
             this.http.patch(`${this.config.baseUrl}${url}`, data, this.getConfig(xCorrelationID)),
             xCorrelationID,
         );
     }
 
-    protected async delete<TReturn, TData extends {} = {}>(url: string, data?: TData): Promise<RequestResult<TReturn>> {
+    protected async delete<TReturn = void, TData extends {} = {}>(
+        url: string,
+        data?: TData,
+    ): Promise<RequestResult<TReturn>> {
         const xCorrelationID = BaseModule.generateXCorrelationID();
-        return BaseModule.invoke(
+        return BaseModule.invoke<TReturn>(
             this.http.delete(`${this.config.baseUrl}${url}`, data, this.getConfig(xCorrelationID)),
             xCorrelationID,
         );
