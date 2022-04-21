@@ -1,9 +1,33 @@
+import React from 'react';
 import { useFormik } from 'formik';
 import Grid from '@mui/material/Grid';
 import { Button } from '@components/button';
-import { BaseFormProps } from '../../contracts';
+import { Descriptor } from '../../contracts';
 import { normalizeSchemaWithValidators } from '../../helpers';
 import { Control } from '../control';
+
+export type BaseFormProps = {
+    /**
+     * Schema descriptors
+     */
+    schema: Descriptor[];
+    /**
+     * Optinal data model
+     */
+    model: { [key: string]: any };
+    /**
+     * Submit handler. Fires if form is valid and provide a model data
+     */
+    onSubmit(data: any): void;
+    /**
+     * Optional css class name
+     */
+    className?: string;
+    /**
+     * Enable/disable form
+     */
+    disabled?: boolean;
+};
 
 const FormContent: React.FunctionComponent<BaseFormProps> = (props) => {
     const { schema, model, className, disabled = false, onSubmit } = props;

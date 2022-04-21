@@ -1,13 +1,33 @@
+import React from 'react';
 import FormGroup from '@mui/material/FormGroup';
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { ControlProps } from '../../../contracts';
 
-type InputProps = ControlProps & { className?: string } & TextFieldProps;
+export type InputProps = ControlProps & {
+    /**
+     * Optional css class name
+     */
+    className?: string;
+    /**
+     * The TextField wrapper component is a complete form control including a label, input, and help text.
+     * It comes with three variants: outlined (default), filled, and standard.
+     * @default outlined
+     */
+    variant?: TextFieldProps['variant'];
+    /**
+     * Size property
+     * @default small
+     */
+    size?: TextFieldProps['size'];
+    /**
+     * Enable/disable sign
+     * @default false
+     */
+    disabled?: TextFieldProps['disabled'];
+};
 
 /**
- * Поле ввода input
- * @param props
- * @returns
+ * Input control for type=text
  */
 const InputText: React.FunctionComponent<InputProps> = (props) => {
     const {
@@ -19,7 +39,7 @@ const InputText: React.FunctionComponent<InputProps> = (props) => {
         size = 'small',
         label = '',
         variant = 'outlined',
-        disabled,
+        disabled = false,
         errorText,
         prompt,
     } = props;

@@ -247,3 +247,6 @@ AtmWeb.csproj
 
 # Npm credentials
 .npmrc
+
+#storybook
+/storybook-static
