@@ -22,7 +22,6 @@ export default {
         plugins.forkTsCheckerWebpackPlugin,
         plugins.eslintPlugin,
         plugins.definePlugin,
-        plugins.providePlugin,
         plugins.stylelintPlugin,
     ],
     resolve: {

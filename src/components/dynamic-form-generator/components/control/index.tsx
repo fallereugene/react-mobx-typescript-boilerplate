@@ -1,3 +1,4 @@
+import React from 'react';
 import { useFormik } from 'formik';
 import { FormDescriptor } from '../../contracts';
 import { InputText } from './input-text';
