@@ -5,3 +5,4 @@ export { default as definePlugin } from './define-plugin';
 export { default as copyWebpackPlugin } from './copy-webpack-plugin';
 export { default as miniCssExtractPlugin } from './mini-css-extract-plugin';
 export { default as stylelintPlugin } from './stylelint-plugin';
+export { default as reactRefreshPlugin } from './react-refresh-plugin';

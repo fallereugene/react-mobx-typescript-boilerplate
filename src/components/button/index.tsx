@@ -24,10 +24,12 @@ interface IButton {
     onClick?: ButtonProps['onClick'];
 }
 
+type ButtonComponentProps = React.PropsWithChildren<IButton>;
+
 /**
  * Primary button component for user interaction
  */
-const Button: React.FunctionComponent<IButton> = (props) => {
+const Button: React.FunctionComponent<ButtonComponentProps> = (props) => {
     const { text, variant = 'contained', type, disabled, onClick, children } = props;
     return (
         <BUIButton variant={variant} type={type} onClick={onClick} disabled={disabled}>

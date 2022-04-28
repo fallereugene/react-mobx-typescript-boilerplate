@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import React from 'react';
 import { enableLogging } from 'mobx-logger';
 import { configure } from 'mobx';
@@ -34,17 +34,21 @@ setInterceptors(httpService, {
 });
 
 const renderApplication = (Component: React.ElementType) => {
-    ReactDOM.render(
-        <ThemeProvider theme={theme}>
-            <StoreContext.Provider value={store}>
-                <ErrorBoundary>
-                    <Component />
-                </ErrorBoundary>
-            </StoreContext.Provider>
-        </ThemeProvider>,
-        document.getElementById(`root`),
-    );
+    const rootElement = document.getElementById('root');
+    if (rootElement) {
+        const root = ReactDOM.createRoot(rootElement);
+        root.render(
+            <ThemeProvider theme={theme}>
+                <StoreContext.Provider value={store}>
+                    <ErrorBoundary>
+                        <Component />
+                    </ErrorBoundary>
+                </StoreContext.Provider>
+            </ThemeProvider>,
+        );
+    }
 };
 
-isDevelopmentMode ? createServer(() => renderApplication(Root)) : renderApplication(Root);
-module.hot && module.hot.accept && module.hot.accept();
+isDevelopmentMode && createServer();
+
+renderApplication(Root);
