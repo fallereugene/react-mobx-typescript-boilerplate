@@ -1,0 +1,1 @@
+export { IResource } from './resource';

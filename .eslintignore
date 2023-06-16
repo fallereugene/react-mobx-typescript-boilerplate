@@ -1,0 +1,17 @@
+node_modules
+storybook-static
+specs
+dist
+build
+server
+.eslintrc.js
+*.scss
+*.html
+*.jpg
+*.png
+*.svg
+*.json
+*.txt
+*.md
+*.http
+*.hbs

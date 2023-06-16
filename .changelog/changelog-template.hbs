@@ -1,0 +1,16 @@
+# ChangeLog
+
+{{#each releases}}
+    {{#if href}}
+        #{{#unless major}}#{{/unless}}
+        [{{title}}]({{#generateCompareLink href}}{{/generateCompareLink}}) ({{formatDate date}})
+    {{else}}
+        ##
+        {{title}}
+        ({{formatDate date}})
+    {{/if}}
+    {{#if summary}}
+        {{summary}}
+    {{/if}}
+    {{#generateReleaseContent commits href}}{{/generateReleaseContent}}
+{{/each}}

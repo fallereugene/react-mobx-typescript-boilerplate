@@ -1,0 +1,6 @@
+*.md
+*.hbs
+storybook-static
+build
+dist
+specs
