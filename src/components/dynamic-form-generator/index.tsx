@@ -28,6 +28,10 @@ export type BaseFormProps = {
      * Getting model from API
      */
     getModel?(): Promise<any>;
+    /**
+     * Active locale name
+     */
+    currentLocale?: string;
 };
 
 /**
@@ -35,7 +39,7 @@ export type BaseFormProps = {
  * Also allow to manage other UI elements in template such as title, spacer etc.
  */
 const DynamicFormGenerator: React.FunctionComponent<BaseFormProps> = (props) => {
-    const { schema, model, className, disabled, onSubmit, getModel } = props;
+    const { schema, model, className, currentLocale, disabled, onSubmit, getModel } = props;
     const [formModel, setFormModel] = React.useState<{ [key: string]: any } | null>(null);
 
     const defineModel = React.useCallback(async () => {
@@ -55,7 +59,14 @@ const DynamicFormGenerator: React.FunctionComponent<BaseFormProps> = (props) => 
     }
 
     return (
-        <FormContent className={className} schema={schema} model={formModel} onSubmit={onSubmit} disabled={disabled} />
+        <FormContent
+            className={className}
+            schema={schema}
+            model={formModel}
+            onSubmit={onSubmit}
+            disabled={disabled}
+            currentLocale={currentLocale}
+        />
     );
 };
 

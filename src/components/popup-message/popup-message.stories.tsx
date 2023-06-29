@@ -1,24 +1,13 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { CreateTemplate } from '../../../.storybook/utils';
 import { PopupMessage, IPopupMessageProps } from '.';
 
-export default {
-    title: 'Components/PopupMessage',
-    component: PopupMessage,
-} as ComponentMeta<typeof PopupMessage>;
+export default { component: PopupMessage };
 
-const Template: ComponentStory<typeof PopupMessage> = (args) => <PopupMessage {...args} />;
-
-export const Normal = Template.bind({});
-const normalProps: IPopupMessageProps = {
+const defaultProps: IPopupMessageProps = {
     message: 'Message text',
     onClose: () => {},
 };
-Normal.args = normalProps;
 
-export const WithTitle = Template.bind({});
-const withTitleProps: IPopupMessageProps = {
-    message: 'Message text',
-    onClose: () => {},
-    header: 'Title',
-};
-WithTitle.args = withTitleProps;
+export const Normal = CreateTemplate(PopupMessage, defaultProps);
+
+export const WithTitle = CreateTemplate(PopupMessage, { ...defaultProps, header: 'Title' });

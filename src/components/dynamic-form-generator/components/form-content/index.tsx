@@ -27,10 +27,14 @@ export type BaseFormProps = {
      * Enable/disable form
      */
     disabled?: boolean;
+    /**
+     * Active locale name
+     */
+    currentLocale?: string;
 };
 
 const FormContent: React.FunctionComponent<BaseFormProps> = (props) => {
-    const { schema, model, className, disabled = false, onSubmit } = props;
+    const { schema, model, className, currentLocale, disabled = false, onSubmit } = props;
 
     const formik = useFormik({
         ...normalizeSchemaWithValidators(schema, model),
@@ -39,6 +43,16 @@ const FormContent: React.FunctionComponent<BaseFormProps> = (props) => {
             formik.resetForm();
         },
     });
+
+    React.useEffect(() => {
+        const { errors, touched, setFieldTouched } = formik;
+        Object.keys(errors).forEach((fieldName) => {
+            if (Object.keys(touched).includes(fieldName)) {
+                setFieldTouched(fieldName);
+            }
+        });
+        // eslint-disable-next-line
+    }, [currentLocale]);
 
     return (
         <form className={className} noValidate onSubmit={formik.handleSubmit}>

@@ -1,23 +1,15 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { CreateTemplate } from '../../../.storybook/utils';
 import { Button } from '.';
 
-export default {
-    title: 'Components/Button',
-    component: Button,
-    argTypes: {
-        backgroundColor: { control: 'color' },
-    },
-} as ComponentMeta<typeof Button>;
+export default { component: Button };
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
-
-export const Normal = Template.bind({});
-Normal.args = {
+export const Normal = CreateTemplate(Button, {
     text: 'Button text',
-};
+    variant: 'contained',
+});
 
-export const Disabled = Template.bind({});
-Disabled.args = {
+export const Disabled = CreateTemplate(Button, {
     text: 'Button text',
     disabled: true,
-};
+    variant: 'contained',
+});
