@@ -2,5 +2,12 @@
     "common": {
         "project_name": "Список дел",
         "main_enter_task_name": "Введите название задачи"
+    },
+    "error": {
+        "invalid_email": "Некорректный email",
+        "required_field": "Обязательное поле",
+        "invalid_uri": "Некорректный url адрес",
+        "min_symbols": "Минимум символов требуется: {{symbols}}",
+        "max_symbols": "Максимум символов: {{symbols}}"
     }
 }

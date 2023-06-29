@@ -7,7 +7,7 @@ import processInputValidation from './process-input-validation';
  * @param descriptor дескриптор формы
  * @returns правило валидации
  */
-const processValidationRules = (descriptor: FormDescriptor): Yup.BaseSchema => {
+const processValidationRules = (descriptor: FormDescriptor): Yup.Schema => {
     const { type } = descriptor;
     switch (type) {
         case 'input':

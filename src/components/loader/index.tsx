@@ -2,7 +2,7 @@ import React from 'react';
 import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-interface ILoaderProps extends CircularProgressProps {
+export interface ILoaderProps extends CircularProgressProps {
     /**
      * Optional css class name
      */

@@ -14,7 +14,7 @@ export const Main: React.FunctionComponent<{}> = observer(() => {
         mainStore: { tasks, init, deleteTask, createTask },
     } = useStore();
     const [initFetchState, initRequest, fetchStates] = useFetch(init);
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     React.useEffect(() => {
         initRequest();
@@ -40,15 +40,7 @@ export const Main: React.FunctionComponent<{}> = observer(() => {
                     </Typography>
                     <DynamicFormGenerator
                         schema={schema}
-                        // model example
-                        // getModel={() =>
-                        //     Promise.resolve({
-                        //         Enabled: true,
-                        //         ForceReset: false,
-                        //         PasswordGeneratorType: 'password generator type',
-                        //         MessageTemplate: 'any template',
-                        //     })
-                        // }
+                        currentLocale={i18n.language}
                         onSubmit={(data: { task: string }) => {
                             createTask(data.task);
                         }}

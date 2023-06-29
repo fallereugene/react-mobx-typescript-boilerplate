@@ -15,7 +15,7 @@ const normalizeSchemaWithValidators = (schema: Descriptor[], model: any = {}) =>
     const initialValues: {
         [key: string]: ReturnType<typeof normalizeDescriptor>['options']['defaultValue'];
     } = isEmptyModel ? {} : _cloneDeep(model);
-    const validationSchema: { [key: string]: Yup.BaseSchema } = {};
+    const validationSchema: { [key: string]: Yup.Schema } = {};
     schema.forEach((descriptor) => {
         if ('name' in descriptor) {
             const normalizedDescriptor = normalizeDescriptor(descriptor);

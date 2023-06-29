@@ -1,7 +1,7 @@
 type SuccessResponse = {
     statusCode: number;
     data: any;
-    headers: Partial<Record<string, string>>;
+    headers: Record<string, any>;
     error: null;
 };
 

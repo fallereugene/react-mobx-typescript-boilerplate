@@ -1,11 +1,11 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Loader } from '.';
+import { CreateTemplate } from '../../../.storybook/utils';
+import { Loader, ILoaderProps } from '.';
 
-export default {
-    title: 'Components/Loader',
-    component: Loader,
-} as ComponentMeta<typeof Loader>;
+export default { component: Loader };
 
-const Template: ComponentStory<typeof Loader> = (args) => <Loader {...args} />;
+const defaultProps: ILoaderProps = {
+    variant: 'indeterminate',
+    color: 'primary',
+};
 
-export const Normal = Template.bind({});
+export const Normal = CreateTemplate(Loader, defaultProps);

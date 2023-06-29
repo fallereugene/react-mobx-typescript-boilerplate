@@ -1,14 +1,14 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Descriptor } from '@components/dynamic-form-generator/contracts';
-import { DynamicFormGenerator } from '.';
+import { CreateTemplate } from '../../../.storybook/utils';
+import { DynamicFormGenerator, BaseFormProps } from '.';
 
 const defaultSchema: Descriptor[] = [
     {
         type: 'input',
         name: 'MessageTemplate',
         options: {
-            label: 'Message template',
-            description: 'Message template.',
+            label: 'input label',
+            description: 'input extended description',
             required: true,
             type: 'text',
             min: 6,
@@ -16,28 +16,18 @@ const defaultSchema: Descriptor[] = [
     },
 ];
 
-export default {
-    title: 'Components/DynamicFormGenerator',
-    component: DynamicFormGenerator,
-    argTypes: {
-        backgroundColor: { control: 'color' },
-    },
-} as ComponentMeta<typeof DynamicFormGenerator>;
-
-const Template: ComponentStory<typeof DynamicFormGenerator> = (args) => <DynamicFormGenerator {...args} />;
-
-export const Normal = Template.bind({});
-Normal.args = {
+const defaultProps: BaseFormProps = {
     schema: defaultSchema,
+    onSubmit: () => {},
 };
 
-export const InputControl = Template.bind({});
-InputControl.args = {
-    schema: defaultSchema,
-};
+export default { component: DynamicFormGenerator };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-    schema: defaultSchema,
+export const Normal = CreateTemplate(DynamicFormGenerator, {
+    ...defaultProps,
+});
+
+export const Disabled = CreateTemplate(DynamicFormGenerator, {
+    ...defaultProps,
     disabled: true,
-};
+});

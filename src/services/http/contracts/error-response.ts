@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 
 type ErrorResponse = {
     statusCode: number;
-    headers: Partial<Record<string, string>>;
+    headers: Record<string, any>;
     error: AxiosError;
     data: null;
 };
