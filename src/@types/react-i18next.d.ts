@@ -6,6 +6,6 @@ declare module 'i18next' {
     // Extend CustomTypeOptions
     interface CustomTypeOptions {
         // custom resources type
-        resources: typeof resources['en'];
+        resources: (typeof resources)['en'];
     }
 }
