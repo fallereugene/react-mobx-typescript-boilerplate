@@ -9,8 +9,8 @@
         "patch": "npm version patch",
         "minor": "npm version minor",
         "major": "npm version major",
-        "build": "npm run format && webpack --config webpack.config.mjs --progress --env mode=production",
-        "start": "webpack serve --env mode=dev --env isDevServer --config webpack.config.mjs --progress",
+        "build": "npm run generate:types && npm run format && webpack --config webpack.config.mjs --progress --env mode=production",
+        "start": "npm run generate:types && webpack serve --env mode=dev --env isDevServer --config webpack.config.mjs --progress",
         "format": "npm run fix:eslint && npm run fix:prettier && npm run check:eslint",
         "fix:eslint": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
         "fix:prettier": "prettier --write \"**/*.*\" --ignore-unknown",
@@ -20,7 +20,9 @@
         "commit": "cz",
         "prepare": "husky install",
         "generate:changelog": "auto-changelog -c .changelog/.auto-changelog -t .changelog/changelog-template.hbs --handlebars-setup .changelog/auto-changelog-setup.js",
-        "version": "npm run generate:changelog -- --package && git add --all"
+        "generate:types": "node scripts/generate-types.mjs",
+        "version": "npm run generate:changelog -- --package && git add --all",
+        "test": ""
     },
     "config": {
         "commitizen": {
@@ -112,6 +114,7 @@
         "stylelint": "^15.9.0",
         "stylelint-config-standard-scss": "^9.0.0",
         "stylelint-webpack-plugin": "^4.1.1",
+        "swagger-typescript-api": "^12.0.4",
         "terser-webpack-plugin": "^5.3.9",
         "ts-loader": "^9.4.4",
         "typescript": "^5.1.6",

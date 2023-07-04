@@ -1,0 +1,202 @@
+openapi: 3.0.3
+info:
+    title: API сервиса AVCAll
+    version: 1.0.1
+
+    description: |
+        # Общая информация
+        Описание API произведено в формате **OpenAPI 3.0**.
+
+        Вы можете использовать данный файл для ознакомления с методами API с помощью:
+          * IDE [**Visual Studio Code**](https://code.visualstudio.com/) версии 1.64.0 и выше,
+          * Расширение [**Swagger Viewer**](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer) версии 3.0.0 и выше.
+
+        Если в запросе/ответе присутствуют дополнительные элементы данных, которые не предусмотрены данным описанием,
+        запрос/ответ должен рассматриваться, как корректный. Дополнительные элементы должны быть проигнорированы.
+
+        ## История изменений
+        Дата | Версия документа | Описание изменений
+        -----------|-------|------
+        26.09.2022 | 1.0.0 | Первая версия документа.
+
+        ## Ошибки
+        HTTP-код | Описание
+        ----------|-------------
+        400 | Неправильный запрос. Статус выдается из-за нарушения формата или допустимых значений параметров запроса.
+        401 | Не авторизованный запрос.
+        403 | Вызов запрещен.
+        404 | Ресурс не найден.
+        422 | Невозможно выполнить операцию на бизнес уровне.
+        500 | Внутренняя ошибка. Необходимо повторить запрос позднее.
+        503 | Сервис временно недоступен. Необходимо повторить запрос позднее.
+
+tags:
+    - name: Наименование сервиса
+      description: Методы API для взаимодействия c сервисом.
+
+servers:
+    - url: '/api/v1/'
+
+paths:
+    /todos/:
+        get:
+            tags:
+                - Todos
+            summary: Получение списка задач
+            responses:
+                '200':
+                    description: Запрос успешно обработан
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/TasksResponse'
+                '400':
+                    $ref: '#/components/responses/400'
+                '401':
+                    $ref: '#/components/responses/401'
+                '403':
+                    $ref: '#/components/responses/403'
+                '404':
+                    $ref: '#/components/responses/404'
+                '500':
+                    $ref: '#/components/responses/500'
+                '503':
+                    $ref: '#/components/responses/503'
+        post:
+            tags:
+                - Todos
+            summary: Создание задачи
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/TaskCreate'
+            responses:
+                '201':
+                    description: Запрос успешно обработан
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Task'
+                '400':
+                    $ref: '#/components/responses/400'
+                '401':
+                    $ref: '#/components/responses/401'
+                '403':
+                    $ref: '#/components/responses/403'
+                '404':
+                    $ref: '#/components/responses/404'
+                '500':
+                    $ref: '#/components/responses/500'
+                '503':
+                    $ref: '#/components/responses/503'
+    /todos/{todoId}:
+        delete:
+            tags:
+                - Todos
+            summary: Удаление задачи
+            parameters:
+                - name: todoId
+                  in: path
+                  description: Идентификатор задачи
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                '204':
+                    description: Запрос успешно обработан
+                '400':
+                    $ref: '#/components/responses/400'
+                '401':
+                    $ref: '#/components/responses/401'
+                '403':
+                    $ref: '#/components/responses/403'
+                '404':
+                    $ref: '#/components/responses/404'
+                '500':
+                    $ref: '#/components/responses/500'
+                '503':
+                    $ref: '#/components/responses/503'
+components:
+    securitySchemes:
+        bearerAuth: # arbitrary name for the security scheme
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+    schemas:
+        TasksResponse:
+            type: array
+            items:
+                $ref: '#/components/schemas/Task'
+        TaskCreate:
+            type: object
+            required:
+                - title
+            properties:
+                title:
+                    description: Название задачи
+                    type: string
+                    example: laboriosam mollitia et enim quasi adipisci quia provident illum
+        Task:
+            type: object
+            required:
+                - id
+                - title
+                - completed
+            properties:
+                id:
+                    description: Идентификатор задачи
+                    type: string
+                    example: 634dcdd51d809e708e660053
+                title:
+                    description: Название задачи
+                    type: string
+                    example: laboriosam mollitia et enim quasi adipisci quia provident illum
+                completed:
+                    type: boolean
+                    description: Признак завершенности задачи.
+                    example: false
+        ErrorResponseModel:
+            description: Модель ответа на основе RFC 7807
+            type: object
+            properties:
+                status:
+                    type: integer
+                    format: int32
+                    description: |
+                        HTTP-код сгенерированный исходным сервером для конкретно этого типа проблемы.
+                    minimum: 100
+                    maximum: 600
+                    example: 503
+                message:
+                    type: string
+                    description: |
+                        Человекочитаемое объяснение, характерное для конкретно этого случая.
+                    example: Таймут подключения к базе данных
+                details:
+                    type: string
+                    description: |
+                        Короткое описание проблемы на английском языке для чтения инженерами (обычно не локализированное).
+                    example: Service Unavailable
+    responses:
+        400:
+            description: Некорректные входные данные
+            content:
+                application/problem+json:
+                    schema:
+                        $ref: '#/components/schemas/ErrorResponseModel'
+        401:
+            description: Неавторизован
+        403:
+            description: Запрещено
+        404:
+            description: Не найден
+        500:
+            description: Внутренняя ошибка сервера
+            content:
+                application/problem+json:
+                    schema:
+                        $ref: '#/components/schemas/ErrorResponseModel'
+        503:
+            description: Сервис временно недоступен

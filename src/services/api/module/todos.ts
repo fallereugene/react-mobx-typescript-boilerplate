@@ -1,12 +1,12 @@
-import { ITask } from '../contracts';
 import BaseModule from './base-module';
+import { Task } from '../__models/todo';
 
 export default class Todos extends BaseModule {
     async getList() {
-        return super.get<ITask[]>(`/todos`);
+        return super.get<Task[]>(`/todos`);
     }
 
-    async createTask(data: Partial<ITask>) {
+    async createTask(data: Partial<Task>) {
         return super.post(`/todos`, data);
     }
 

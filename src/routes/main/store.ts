@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
-import { ITask } from '@services/api/contracts';
+import { Task } from '@services/api/__models/todo';
 import { makeAutoObservable } from 'mobx';
 import { Store } from '@services/store';
 import { invokeApi } from '@/utils';
 
 class MainStore {
-    tasks: ITask[] = [];
+    tasks: Task[] = [];
 
     constructor(private root: Store) {
         makeAutoObservable(this, {}, { autoBind: true });
@@ -34,16 +34,15 @@ class MainStore {
     }
 
     addTask(task: string) {
-        const newTask: ITask = {
+        const newTask: Task = {
             title: task,
             completed: false,
-            userId: 1,
             id: uuidv4(),
         };
         this.tasks = [newTask, ...this.tasks];
     }
 
-    setList(list: ITask[]) {
+    setList(list: Task[]) {
         this.tasks = list;
     }
 }

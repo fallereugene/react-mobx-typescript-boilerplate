@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
-import { ITask } from '@services/api/contracts';
+import { Task as ITask } from '@services/api/__models/todo';
 import { Button } from '@components/button';
 
 const Item = styled(Paper)(({ theme }) => ({

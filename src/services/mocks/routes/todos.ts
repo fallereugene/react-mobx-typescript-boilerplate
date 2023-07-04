@@ -1,5 +1,5 @@
 import { Response as MResponse, Server } from 'miragejs';
-import { ITask } from '@services/api/contracts';
+import { Task } from '@services/api/__models/todo';
 import { v4 as uuidv4 } from 'uuid';
 
 export default (context: Server) => {
@@ -9,10 +9,9 @@ export default (context: Server) => {
 
     context.post(`/todos`, (schema, request) => {
         const { title } = JSON.parse(request.requestBody);
-        const newTask: ITask = {
+        const newTask: Task = {
             title,
             completed: false,
-            userId: 1,
             id: uuidv4(),
         };
         schema.db.todos.insert(newTask);
