@@ -98,7 +98,6 @@
         "mini-css-extract-plugin": "^2.7.6",
         "miragejs": "^0.1.47",
         "mobx-logger": "^0.7.1",
-        "normalize.css": "^8.0.1",
         "postcss": "^8.4.24",
         "postcss-loader": "^7.3.3",
         "postcss-preset-env": "^8.5.1",
