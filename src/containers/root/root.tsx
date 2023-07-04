@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import CssBaseline from '@mui/material/CssBaseline';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import Grid from '@mui/material/Grid';
@@ -36,6 +37,7 @@ const Root: React.FunctionComponent<{}> = observer(() => {
     return (
         <BrowserRouter>
             <Layout>
+                <CssBaseline /> {/* apply normalize.css */}
                 {Localization.getLanguagesList().map((lang, idx) => (
                     <Button
                         key={idx}
