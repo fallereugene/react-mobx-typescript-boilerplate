@@ -1,0 +1,1 @@
+export { SxProps } from './theme';

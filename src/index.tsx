@@ -1,3 +1,4 @@
+import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import React from 'react';
 import { enableLogging } from 'mobx-logger';
@@ -9,12 +10,10 @@ import { ThemeProvider } from '@mui/material';
 import { Store } from '@services/store';
 import { API, setInterceptors } from '@services/api';
 import httpService from '@services/http';
-import localization from '@services/localization';
 import theme from '@/theme';
+import './i18n';
 
 const isDevelopmentMode = process.env.ENV !== 'production';
-
-localization.init();
 
 if (isDevelopmentMode) {
     enableLogging({
@@ -45,7 +44,9 @@ const renderApplication = (Component: React.ElementType) => {
             <ThemeProvider theme={theme}>
                 <StoreContext.Provider value={store}>
                     <ErrorBoundary>
-                        <Component />
+                        <BrowserRouter>
+                            <Component />
+                        </BrowserRouter>
                     </ErrorBoundary>
                 </StoreContext.Provider>
             </ThemeProvider>,

@@ -1,2 +1,2 @@
-export { default as Routes } from './routes';
-export { default as ResponseStatus } from './response-status';
+export { Route } from './routes';
+export { ResponseStatus } from './response-status';

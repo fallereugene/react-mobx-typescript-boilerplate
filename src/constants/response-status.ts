@@ -1,7 +1,7 @@
 /**
  * Поддерживаемы статус-коды ответов API
  */
-enum ResponseStatus {
+export enum ResponseStatus {
     // 200 OK («хорошо»)
     s200 = 200,
     // No Content («нет содержимого»)
@@ -21,5 +21,3 @@ enum ResponseStatus {
     // Internal Server Error («внутренняя ошибка сервера»)
     s500 = 500,
 }
-
-export default ResponseStatus;
