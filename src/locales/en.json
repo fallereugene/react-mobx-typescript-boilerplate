@@ -1,7 +1,11 @@
 {
     "common": {
+        "delete": "Delete",
+        "confirm": "Confirm"
+    },
+    "main": {
         "project_name": "ToDo List",
-        "main_enter_task_name": "Enter task name"
+        "enter_task_name": "Enter task name"
     },
     "error": {
         "invalid_email": "Invalid email",
@@ -9,5 +13,8 @@
         "invalid_uri": "Not valid uri address",
         "min_symbols": "Minimum symbols required: {{symbols}}",
         "max_symbols": "Maximum symbols: {{symbols}}"
+    },
+    "control": {
+        "main_input_label": "Task description"
     }
 }

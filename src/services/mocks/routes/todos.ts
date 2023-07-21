@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default (context: Server) => {
     context.get(`/todos`, (schema) => {
-        return new MResponse(200, {}, schema.db.todos);
+        return new MResponse(422, {}, schema.db.todos);
     });
 
     context.post(`/todos`, (schema, request) => {
