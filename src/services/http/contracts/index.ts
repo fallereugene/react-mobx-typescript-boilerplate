@@ -1,3 +1,2 @@
-export type { default as IRequestConfig } from './request-config';
-export type { default as ErrorResponse } from './error-response';
-export type { default as SuccessResponse } from './success-response';
+export type { ResponseSuccess } from './response-success';
+export type { ResponseError } from './response-error';

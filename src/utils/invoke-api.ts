@@ -1,11 +1,9 @@
-import { RequestResult, RequestResultError, RequestResultSuccess } from '@/services/api/contracts';
+import { RequestResult, ResponseError, ResponseSuccess } from '@/services/api/contracts';
 
 export type ActionConfig<
     TResult extends RequestResult<any>,
-    TResultData = TResult extends RequestResultSuccess<any>
-        ? Omit<RequestResultSuccess<TResult['data']>, 'error'>
-        : never,
-    TErrorData = TResult extends RequestResultError ? Omit<RequestResultError, 'data'> : never,
+    TResultData = TResult extends ResponseSuccess<any> ? Omit<ResponseSuccess<TResult['data']>, 'error'> : never,
+    TErrorData = TResult extends ResponseError ? Omit<ResponseError, 'data'> : never,
 > = {
     onSuccess?(requestResultData: TResultData): void;
     onError?(requestErrorData: TErrorData): void;

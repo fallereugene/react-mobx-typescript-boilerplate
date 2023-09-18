@@ -1,10 +1,9 @@
 import webpack from 'webpack';
 import dotenv from 'dotenv';
-import { mode, isServer } from '../utils/index.mjs';
+import { mode } from '../utils/index.mjs';
 
 const config = {
-    ENV: JSON.stringify(mode),
-    IS_DEV_SERVER: JSON.stringify(isServer),
+    IS_PRODUCTION_MODE: mode === 'production',
     ...(dotenv.config().parsed || {}),
 };
 

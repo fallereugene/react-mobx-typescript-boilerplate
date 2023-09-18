@@ -1,2 +1,5 @@
-export { API } from './api';
-export { default as setInterceptors } from './interceptors';
+export * from './api';
+export * from './abstract-api';
+export * from './abstract-module';
+export * from './utils';
+export { setInterceptors } from './interceptors';
