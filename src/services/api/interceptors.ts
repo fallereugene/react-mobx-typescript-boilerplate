@@ -5,7 +5,7 @@ interface IConfig {
     onResponseError?(error: AxiosError): void;
 }
 
-const setInterceptors = (http: typeof httpService, config: IConfig) => {
+export const setInterceptors = (http: typeof httpService, config: IConfig) => {
     const { service } = http;
     const { onResponseError } = config;
     service.interceptors.response.use(
@@ -16,5 +16,3 @@ const setInterceptors = (http: typeof httpService, config: IConfig) => {
         },
     );
 };
-
-export default setInterceptors;

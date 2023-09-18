@@ -1,7 +1,7 @@
-import BaseModule from './base-module';
-import { Task } from '../__models/todo';
+import { ModuleAbstract } from '../../abstract-module';
+import { Task } from '../../__models/todo';
 
-export default class Todos extends BaseModule {
+export class Todo extends ModuleAbstract {
     async getList() {
         return super.get<Task[]>(`/todos`);
     }

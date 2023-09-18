@@ -1,6 +1,6 @@
-import { Todos } from './module';
-import BaseAPI from './base-api';
+import { ApiAbstract } from './abstract-api';
+import { Todo } from './modules';
 
-export class API extends BaseAPI {
-    todos = this.instantiateModule(Todos);
+export class Api extends ApiAbstract {
+    todo = this.moduleFactory(Todo);
 }

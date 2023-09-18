@@ -1,2 +1,2 @@
-export { default as IApiConfig } from './api-config';
-export { RequestResult, RequestResultError, RequestResultSuccess } from './request-result';
+export type { ApiConfig } from './api-config';
+export * from './response';

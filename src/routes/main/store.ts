@@ -14,21 +14,21 @@ class MainStore {
 
     async init() {
         const { api } = this.root;
-        await invokeApi(api.todos.getList(), {
+        await invokeApi(api.todo.getList(), {
             onSuccess: (result) => this.setList(result.data),
         });
     }
 
     async createTask(title: string) {
         const { api } = this.root;
-        await invokeApi(api.todos.createTask({ title }), {
+        await invokeApi(api.todo.createTask({ title }), {
             onSuccess: () => this.addTask(title),
         });
     }
 
     async deleteTask(id: string) {
         const { api } = this.root;
-        await invokeApi(api.todos.deleteTask(id), {
+        await invokeApi(api.todo.deleteTask(id), {
             onSuccess: () => this.setList(this.tasks.filter((i) => i.id !== id)),
         });
     }

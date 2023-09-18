@@ -1,6 +1,4 @@
-interface IApiConfig {
+export type ApiConfig = {
     baseUrl: string;
-    headers: { [key: string]: string };
-}
-
-export default IApiConfig;
+    headers: Record<string, string>;
+};
