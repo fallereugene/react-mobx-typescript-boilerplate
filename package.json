@@ -24,7 +24,8 @@
         "version": "npm run generate:changelog -- --package && git add --all",
         "test": "jest --passWithNoTests --config='.tests/jest-tests.config.js'",
         "test:watch": "jest --config='.tests/jest-full.config.js' --watch",
-        "test:coverage": "jest --config='.tests/jest-tests.config.js' --coverage"
+        "test:coverage": "jest --config='.tests/jest-tests.config.js' --coverage",
+        "update-caniuse": "npx browserslist@latest --update-db"
     },
     "config": {
         "commitizen": {
@@ -55,12 +56,10 @@
         "yup": "^1.2.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.22.5",
         "@babel/plugin-transform-runtime": "^7.0.0",
         "@babel/preset-env": "^7.22.5",
         "@babel/preset-react": "^7.22.5",
         "@babel/preset-typescript": "^7.22.5",
-        "@babel/register": "^7.6.2",
         "@commitlint/cli": "^17.6.6",
         "@commitlint/config-conventional": "^17.6.6",
         "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",

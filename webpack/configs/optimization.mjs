@@ -2,13 +2,13 @@ import TerserJSPlugin from 'terser-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 
 export const optimization = {
+    runtimeChunk: 'single',
     splitChunks: {
-        chunks: 'all',
         cacheGroups: {
-            commons: {
+            vendor: {
                 test: /[\\/]node_modules[\\/]/,
-                name: `vendor`,
-                chunks: `initial`,
+                name: 'vendor',
+                chunks: 'all',
             },
         },
     },

@@ -14,9 +14,10 @@ const __dirname = dirname(__filename);
 export default {
     context: __dirname,
     target: 'web',
-    entry: ['core-js', join(rootDir, 'src/index.tsx')],
+    entry: [join(rootDir, 'src/index.ts')],
     output: {
         path: join(rootDir, 'build/dist'),
+        publicPath: '/',
     },
     cache: {
         type: 'filesystem',
@@ -44,12 +45,5 @@ export default {
     resolve: {
         alias,
         extensions: ['.tsx', '.ts', '.js', '.jsx'],
-    },
-    watchOptions: {
-        // без опции fork-ts-checker-webpack-plugin делает инкрементальную сборку после первого обновления
-        // крайне долго. Дольше, чем собирает при запуске.
-        // Возможно, в последующих обновлениях исправят:
-        // https://github.com/TypeStrong/fork-ts-checker-webpack-plugin/issues/769
-        ignored: /node_modules/,
     },
 };
