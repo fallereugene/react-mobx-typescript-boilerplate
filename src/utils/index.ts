@@ -1,1 +1,2 @@
-export { default as invokeApi } from './invoke-api';
+export { invokeApi } from './invoke-api';
+export { getEncodedQueryString } from './get-encoded-query-string';
