@@ -1,6 +1,8 @@
 import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import React from 'react';
+import { QueryParamProvider } from 'use-query-params';
+import { ReactRouter6Adapter } from 'use-query-params/adapters/react-router-6';
 import { enableLogging } from 'mobx-logger';
 import { configure } from 'mobx';
 import { createServer } from '@services/mocks';
@@ -46,7 +48,9 @@ const renderApplication = (Component: React.ElementType) => {
                 <StoreContext.Provider value={store}>
                     <ErrorBoundary>
                         <BrowserRouter>
-                            <Component />
+                            <QueryParamProvider adapter={ReactRouter6Adapter}>
+                                <Component />
+                            </QueryParamProvider>
                         </BrowserRouter>
                     </ErrorBoundary>
                 </StoreContext.Provider>

@@ -11,7 +11,7 @@ export type ActionConfig<
 
 type UnboxPromise<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
 
-const invokeApi = async <
+export const invokeApi = async <
     TData,
     TApiMethod extends Promise<RequestResult<TData>>,
     TResult extends UnboxPromise<TApiMethod>,
@@ -31,5 +31,3 @@ const invokeApi = async <
         }
     }
 };
-
-export default invokeApi;
