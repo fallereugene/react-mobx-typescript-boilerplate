@@ -1,14 +1,14 @@
 import axios, { AxiosError } from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import { makeAutoObservable } from 'mobx';
 import { Store } from '@services/store';
+import { Notification } from './contracts';
 import { RootState } from './constants';
 
 class RootStore {
     state: RootState = RootState.Initialization;
 
-    requestErrors: string[] = [];
-
-    isFetching = true;
+    notifications: Notification[] = [];
 
     constructor(private root: Store) {
         makeAutoObservable(this, {}, { autoBind: true });
@@ -18,37 +18,39 @@ class RootStore {
         this.state = state;
     }
 
-    removeRequestError(error: string) {
-        this.requestErrors = this.requestErrors.filter((i) => i !== error);
+    addNotification(payload: Notification) {
+        this.notifications = [...this.notifications, payload];
     }
 
-    setFetchingState(isFetching: boolean) {
-        this.isFetching = isFetching;
-    }
-
-    setRequestError(error: string) {
-        this.requestErrors = [...this.requestErrors, error];
+    removeNotification(payload: Notification) {
+        this.notifications = this.notifications.filter((i) => i !== payload);
     }
 
     responseErrorInterceptor(error: AxiosError) {
-        // eslint-disable-next-line
-        console.log(`axError:`, axios.isAxiosError(error));
-
         if (axios.isAxiosError(error)) {
             const headers = error?.response?.headers || {};
-            // eslint-disable-next-line
-            console.log(`Error:`, JSON.stringify(error?.response));
-
-            let xCorrelationId: string | null = null;
-            // eslint-disable-next-line
-            for (const [key, value] of Object.entries(headers)) {
-                if (key.toLowerCase() === 'x-correlation-id') {
-                    xCorrelationId = value as string;
-                    break;
-                }
-            }
-
-            xCorrelationId && this.setRequestError(xCorrelationId);
+            const xCorrelationId = error.code === 'ECONNABORTED' ? error?.config?.headers?.['X-Correlation-ID'] : null;
+            const header =
+                error.code === 'ECONNABORTED'
+                    ? 'Истекло время ожидания ответа. Повторите попытку позже.'
+                    : 'Произошла ошибка';
+            this.addNotification({
+                header: header || 'Ошибка запроса.',
+                text:
+                    xCorrelationId ??
+                    (() => {
+                        // eslint-disable-next-line
+                        for (const [key, value] of Object.entries(headers)) {
+                            if (key.toLowerCase() === 'x-correlation-id') {
+                                return value;
+                            }
+                        }
+                        return 'Что-то пошло не так';
+                    })(),
+                severity: 'error',
+                type: 'toast',
+                id: uuidv4(),
+            });
         }
     }
 

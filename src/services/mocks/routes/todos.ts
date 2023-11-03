@@ -4,10 +4,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default (context: Server) => {
     context.get(`/api/todos`, (schema) => {
+        // return new MResponse(422, { 'x-correlation-id': '1235-ere-22' });
         return new MResponse(200, {}, schema.db.todos);
     });
 
     context.post(`/api/todos`, (schema, request) => {
+        // return new MResponse(422, { 'x-correlation-id': '1235-ere-22' });
         const { title } = JSON.parse(request.requestBody);
         const newTask: Task = {
             title,
