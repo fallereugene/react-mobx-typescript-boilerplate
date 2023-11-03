@@ -20,7 +20,7 @@ export default class ErrorBoundary extends React.Component<React.PropsWithChildr
         const { isErrorOccurred } = this.state;
         const { children } = this.props;
         if (isErrorOccurred) {
-            return <div className="error-boundary">ERROR OCCURED</div>;
+            return <div className="error-boundary">ERROR OCCURRED</div>;
         }
         return children;
     }

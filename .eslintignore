@@ -3,7 +3,6 @@ storybook-static
 specs
 dist
 build
-server
 .eslintrc.js
 *.scss
 *.html
@@ -15,3 +14,9 @@ server
 *.md
 *.http
 *.hbs
+__models__
+Devops
+*.yml
+*.yaml
+*.conf
+*.example

@@ -1,23 +1,24 @@
 const path = require('path');
 module.exports = {
     parser: '@typescript-eslint/parser',
-    plugins: ['@typescript-eslint', 'react', 'prettier'],
+    plugins: ['@typescript-eslint', 'react', 'prettier', 'jest'],
     env: {
         browser: true,
         jest: true,
+        es2021: true,
     },
     extends: [
         'airbnb',
         'airbnb-typescript',
-        'airbnb/hooks',
+        'plugin:react-hooks/recommended',
         'plugin:jsx-a11y/recommended',
         'eslint:recommended',
         'plugin:react/recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:prettier/recommended',
-        'plugin:storybook/recommended',
-        'plugin:jest/recommended',
         'prettier',
+        'plugin:jest/recommended',
+        'plugin:storybook/recommended',
     ],
     parserOptions: {
         project: path.resolve(__dirname, './tsconfig.json'),
@@ -29,6 +30,13 @@ module.exports = {
         },
     },
     rules: {
+        'prettier/prettier': ['error', { endOfLine: 'auto' }],
+        'no-restricted-imports': [
+            'error',
+            {
+                patterns: ['@mui/*/*/*'],
+            },
+        ],
         indent: 'off',
         'no-unused-expressions': 'off',
         'import/extensions': 'off',
@@ -71,10 +79,24 @@ module.exports = {
                 unnamedComponents: 'arrow-function',
             },
         ],
+        'jest/no-hooks': [
+            'error',
+            {
+                allow: ['beforeAll', 'beforeEach', 'afterEach', 'afterAll'],
+            },
+        ],
+        'jest/max-expects': [
+            'error',
+            {
+                max: 20,
+            },
+        ],
+        'jest/unbound-method': 'off',
     },
     settings: {
         react: {
             version: 'detect',
         },
     },
+    ignorePatterns: ['server/*'],
 };

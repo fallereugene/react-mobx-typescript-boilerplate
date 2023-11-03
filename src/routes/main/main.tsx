@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -7,20 +6,15 @@ import { DynamicFormGenerator } from '@components/dynamic-form-generator';
 import { Loader } from '@components/loader';
 import { Task } from './components/task';
 import { schema } from './schema';
-import { useFetch, useStore } from '@/hooks';
+import { useGettingTasks, useDeleteTask, useCreateTask } from './hooks';
 
-export const Main: React.FunctionComponent<{}> = observer(() => {
-    const {
-        mainStore: { tasks, init, deleteTask, createTask },
-    } = useStore();
-    const [initFetchState, initRequest, fetchStates] = useFetch(init);
+export const Main: React.FunctionComponent<{}> = () => {
     const { t, i18n } = useTranslation();
+    const { isLoading, data: taskList } = useGettingTasks();
+    const { mutate: deleteTask, status: deleteTaskStatus } = useDeleteTask();
+    const { mutate: createTask, status: createTaskStatus } = useCreateTask();
 
-    React.useEffect(() => {
-        initRequest();
-    }, [initRequest]);
-
-    if (tasks === null) {
+    if (isLoading) {
         return (
             <Grid container direction="row" justifyContent="center" alignItems="center" padding={2}>
                 <Loader />
@@ -41,25 +35,23 @@ export const Main: React.FunctionComponent<{}> = observer(() => {
                     <DynamicFormGenerator
                         schema={schema}
                         currentLocale={i18n.language}
-                        onSubmit={(data: { task: string }) => {
-                            createTask(data.task);
-                        }}
-                        disabled={[fetchStates.Success, fetchStates.Error].includes(initFetchState)}
+                        onSubmit={(data: { task: string }) => createTask(data.task)}
+                        disabled={createTaskStatus === 'pending'}
                     />
                 </Grid>
             </Grid>
             <Grid container spacing={2} padding={1} direction="row" alignItems="center">
-                {tasks.map((item) => (
+                {taskList?.map((item) => (
                     <Task
                         key={item.id}
                         {...item}
                         onDelete={() => deleteTask(item.id)}
-                        disabled={[fetchStates.Success, fetchStates.Error].includes(initFetchState)}
+                        disabled={deleteTaskStatus === 'pending'}
                     />
                 ))}
             </Grid>
         </>
     );
-});
+};
 
 export default Main;
