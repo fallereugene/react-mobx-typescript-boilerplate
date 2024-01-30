@@ -1,9 +1,6 @@
 /* eslint-disable */
 export class Logger {
-    constructor(
-        private _isDebugMode = true,
-        private _logConsoleInProductionMode = false,
-    ) {
+    constructor(private _isDebugMode = true, private _logConsoleInProductionMode = false) {
         this.log = this.log.bind(this);
     }
     log(groupName: string, target: any): void {
