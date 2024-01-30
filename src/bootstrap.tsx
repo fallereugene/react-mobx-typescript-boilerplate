@@ -1,8 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import React from 'react';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { QueryClientProvider } from '@tanstack/react-query';
 import { QueryParamProvider } from 'use-query-params';
 import { ReactRouter6Adapter } from 'use-query-params/adapters/react-router-6';
 import { enableLogging } from 'mobx-logger';
@@ -12,14 +10,13 @@ import ErrorBoundary from '@components/error-boundary';
 import { Root } from '@containers/root';
 import { ThemeProvider } from '@mui/material';
 import { Store } from '@services/store';
-import { setInterceptors } from '@services/api';
+import { Api, setInterceptors } from '@services/api';
 import httpService from '@services/http';
-import queryClient from '@services/react-query-client';
 import { Config } from '@services/config';
 import theme from '@/theme';
 import './i18n';
 
-const { IS_PRODUCTION_MODE } = Config.getConfig();
+const { IS_PRODUCTION_MODE, BASE_API_URL } = Config.getConfig();
 
 if (!IS_PRODUCTION_MODE) {
     enableLogging({
@@ -35,8 +32,8 @@ if (!IS_PRODUCTION_MODE) {
     });
 }
 
-const StoreContext = React.createContext<Store>({} as Store);
-const store = new Store();
+export const StoreContext = React.createContext<Store>({} as Store);
+const store = new Store(new Api(httpService).configure({ baseUrl: BASE_API_URL }));
 
 setInterceptors(httpService, {
     onResponseError: store.rootStore.responseErrorInterceptor,
@@ -47,20 +44,17 @@ const renderApplication = (Component: React.ElementType) => {
     if (rootElement) {
         const root = ReactDOM.createRoot(rootElement);
         root.render(
-            <QueryClientProvider client={queryClient}>
-                <ReactQueryDevtools initialIsOpen={!IS_PRODUCTION_MODE} />
-                <ThemeProvider theme={theme}>
-                    <StoreContext.Provider value={store}>
-                        <ErrorBoundary>
-                            <BrowserRouter>
-                                <QueryParamProvider adapter={ReactRouter6Adapter}>
-                                    <Component />
-                                </QueryParamProvider>
-                            </BrowserRouter>
-                        </ErrorBoundary>
-                    </StoreContext.Provider>
-                </ThemeProvider>
-            </QueryClientProvider>,
+            <ThemeProvider theme={theme}>
+                <StoreContext.Provider value={store}>
+                    <ErrorBoundary>
+                        <BrowserRouter>
+                            <QueryParamProvider adapter={ReactRouter6Adapter}>
+                                <Component />
+                            </QueryParamProvider>
+                        </BrowserRouter>
+                    </ErrorBoundary>
+                </StoreContext.Provider>
+            </ThemeProvider>,
         );
     }
 };
@@ -68,5 +62,3 @@ const renderApplication = (Component: React.ElementType) => {
 !IS_PRODUCTION_MODE && createServer();
 
 renderApplication(Root);
-
-export { StoreContext };

@@ -8,7 +8,7 @@ import { RootState } from './constants';
 import { useStore } from '@/hooks';
 import { getRoutes } from './routes';
 
-const Root: React.FunctionComponent<{}> = () => {
+const Root: React.FunctionComponent<{}> = observer(() => {
     const store = useStore();
     const { state, init } = store.rootStore;
     const routing = useRoutes(getRoutes(store));
@@ -16,25 +16,12 @@ const Root: React.FunctionComponent<{}> = () => {
     React.useEffect(() => {
         init();
     }, [init]);
-
-    const applicationState = (() => {
-        switch (state) {
-            case RootState.Initialization:
-                return <Loader />;
-            case RootState.Initialized:
-                return <Layout>{routing}</Layout>;
-            case RootState.InitializationError:
-            default:
-                return null;
-        }
-    })();
-
     return (
         <>
             <CssBaseline /> {/* apply normalize.css */}
-            {applicationState}
+            {state === RootState.Initialization ? <Loader /> : <Layout>{routing}</Layout>}
         </>
     );
-};
+});
 
-export default observer(Root);
+export default Root;

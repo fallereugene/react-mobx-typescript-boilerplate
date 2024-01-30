@@ -3,10 +3,7 @@ import { HttpService } from '../http';
 import { ApiConfig, RequestResult } from './contracts';
 
 export abstract class ModuleAbstract {
-    constructor(
-        private readonly httpService: HttpService,
-        private readonly config: ApiConfig,
-    ) {}
+    constructor(private readonly httpService: HttpService, private readonly config: ApiConfig) {}
 
     /**
      * Метод GET API клиента
@@ -32,10 +29,7 @@ export abstract class ModuleAbstract {
      * @param data Полезная нагрузка
      * @returns Результат вызова http сервиса.
      */
-    protected async post<TReturn = void, TData extends {} = {}>(
-        url: string,
-        data: TData,
-    ): Promise<RequestResult<TReturn>> {
+    protected async post<TReturn, TData>(url: string, data: TData): Promise<RequestResult<TReturn>> {
         const xCorrelationID = ModuleAbstract.generateUuid();
         return ModuleAbstract.invoke(
             this.httpService.post(
@@ -54,10 +48,7 @@ export abstract class ModuleAbstract {
      * @param data Полезная нагрузка
      * @returns Результат вызова http сервиса.
      */
-    protected async put<TReturn = void, TData extends {} = {}>(
-        url: string,
-        data: TData,
-    ): Promise<RequestResult<TReturn>> {
+    protected async put<TReturn, TData>(url: string, data: TData): Promise<RequestResult<TReturn>> {
         const xCorrelationID = ModuleAbstract.generateUuid();
         return ModuleAbstract.invoke(
             this.httpService.put(
@@ -76,10 +67,7 @@ export abstract class ModuleAbstract {
      * @param data Полезная нагрузка
      * @returns Результат вызова http сервиса.
      */
-    protected async patch<TReturn = void, TData extends {} = {}>(
-        url: string,
-        data: TData,
-    ): Promise<RequestResult<TReturn>> {
+    protected async patch<TReturn, TData>(url: string, data: TData): Promise<RequestResult<TReturn>> {
         const xCorrelationID = ModuleAbstract.generateUuid();
         return ModuleAbstract.invoke(
             this.httpService.patch(
@@ -97,7 +85,7 @@ export abstract class ModuleAbstract {
      * в конфигурации в абстрактном классе API клиента (BaseApi).
      * @returns Результат вызова http сервиса.
      */
-    protected async delete<TReturn = void>(url: string): Promise<RequestResult<TReturn>> {
+    protected async delete<TReturn>(url: string): Promise<RequestResult<TReturn>> {
         const xCorrelationID = ModuleAbstract.generateUuid();
         return ModuleAbstract.invoke(
             this.httpService.delete(
@@ -132,6 +120,16 @@ export abstract class ModuleAbstract {
     private static async invoke(pendingMethod: Promise<RequestResult>, xCorrelationID: string) {
         const requestResult = await pendingMethod;
         const { status, headers, error, data } = requestResult;
+
+        if (error) {
+            return {
+                status,
+                xCorrelationID,
+                headers,
+                data: null,
+                error,
+            };
+        }
         return { status, xCorrelationID, headers, data, error };
     }
 

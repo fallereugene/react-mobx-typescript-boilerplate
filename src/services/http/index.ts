@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { HttpRequestError } from './error';
 import { ResponseSuccess, ResponseError } from './contracts';
 
 /**
@@ -105,10 +104,17 @@ export class HttpService {
      * @param error Объект ошибки
      */
     private static responseErrorHandler(error: AxiosError): ResponseError {
-        throw new HttpRequestError('Http request error', {
-            ...error,
-            ...(error.response ? { status: error.response.status, data: null, headers: error.response.headers } : {}),
-        });
+        if (error.response) {
+            const { status, headers } = error.response;
+            return {
+                error,
+                status,
+                data: null,
+                headers,
+            };
+        }
+
+        throw error;
     }
 }
 
