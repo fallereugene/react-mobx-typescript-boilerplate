@@ -21,6 +21,7 @@ export const createServer = ({ environment = 'development' } = {}): void => {
 
         routes() {
             todosRoutes(this);
+            this.passthrough('/locales/**');
         },
     });
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import Grid from '@mui/material/Grid';
 import { Button } from '@components/button';
 import { Descriptor } from '../../contracts';
@@ -35,6 +36,7 @@ export type BaseFormProps = {
 
 const FormContent: React.FunctionComponent<BaseFormProps> = (props) => {
     const { schema, model, className, currentLocale, disabled = false, onSubmit } = props;
+    const { t } = useTranslation();
 
     const formik = useFormik({
         ...normalizeSchemaWithValidators(schema, model),
@@ -66,7 +68,7 @@ const FormContent: React.FunctionComponent<BaseFormProps> = (props) => {
             })}
             <Grid container>
                 <Button type="submit" variant="contained" disabled={disabled}>
-                    Confirm
+                    {t('common.confirm')}
                 </Button>
             </Grid>
         </form>

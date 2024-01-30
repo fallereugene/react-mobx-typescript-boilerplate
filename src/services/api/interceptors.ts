@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import { StatusCodes } from 'http-status-codes';
 import httpService from '../http';
 
 interface IConfig {
@@ -11,7 +12,18 @@ export const setInterceptors = (http: typeof httpService, config: IConfig) => {
     service.interceptors.response.use(
         (config) => config,
         (error) => {
-            onResponseError && onResponseError(error);
+            const headers = error?.response?.headers || {};
+            switch (error?.response?.status) {
+                case StatusCodes.GATEWAY_TIMEOUT:
+                    break;
+                case StatusCodes.UNAUTHORIZED:
+                    if (headers && headers.location) {
+                        window.location.href = headers.location;
+                    }
+                    return Promise.reject(error);
+                default:
+                    onResponseError && onResponseError(error);
+            }
             return Promise.reject(error);
         },
     );

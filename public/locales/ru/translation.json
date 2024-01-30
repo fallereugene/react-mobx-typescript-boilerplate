@@ -1,7 +1,11 @@
 {
     "common": {
         "delete": "Удалить",
-        "confirm": "Подтвердить"
+        "confirm": "Подтвердить",
+        "change_language_counter_zero": "Языковая локаль не изменялась",
+        "change_language_counter_one": "Языковая локаль изменялась {{count}} раз",
+        "change_language_counter_few": "Языковая локаль изменялась {{count}} раза",
+        "change_language_counter_many": "Языковая локаль изменялась {{count}} раз"
     },
     "main": {
         "project_name": "Список дел",
