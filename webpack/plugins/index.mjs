@@ -7,3 +7,4 @@ export { stylelintPlugin } from './stylelint-plugin.mjs';
 export { reactRefreshPlugin } from './react-refresh-plugin.mjs';
 export { environmentPlugin } from './environment-plugin.mjs';
 export { providePlugin } from './provide-plugin.mjs';
+export { bundleAnalyzerPlugin } from './bundle-analyzer-plugin.mjs';

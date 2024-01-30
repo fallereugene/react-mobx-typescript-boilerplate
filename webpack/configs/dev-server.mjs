@@ -1,16 +1,8 @@
 import dotenv from 'dotenv';
-import { resolve } from 'path';
-import { rootDir } from '../utils/index.mjs';
 
-const DEFAULT_PORT = 8080;
 const SERVER_HOST = '127.0.0.1';
 
-export const devServerUrl = `http://${SERVER_HOST}:${DEFAULT_PORT}/`;
-
 export const devServerConfig = {
-    static: {
-        directory: resolve(rootDir, './build/dist/'),
-    },
     historyApiFallback: true,
     open: true,
     hot: 'only',
@@ -19,7 +11,7 @@ export const devServerConfig = {
         overlay: false,
     },
     compress: true,
-    port: DEFAULT_PORT,
+    port: 'auto',
     host: SERVER_HOST,
     proxy: {
         /**
