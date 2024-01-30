@@ -24,12 +24,13 @@
             "@core/*": ["src/core/*"],
             "@services/*": ["src/services/*"],
             "@assets/*": ["src/assets/*"],
-            "@utils": ["src/utils/index"]
+            "@utils": ["src/utils/index"],
+            "@storybook-helpers": [".storybook/utils"]
         },
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "resolveJsonModule": true
     },
-    "exclude": ["node_modules", "webpack"]
+    "exclude": ["node_modules", "webpack", "server"]
 }

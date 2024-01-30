@@ -6,9 +6,7 @@ export default {
     output: {
         filename: '[name].[contenthash].js',
         chunkFilename: '[name].[chunkhash].js',
-        clean: true,
     },
-    target: ['web', 'es5'],
     optimization,
     plugins: [plugins.miniCssExtractPlugin],
     performance: {

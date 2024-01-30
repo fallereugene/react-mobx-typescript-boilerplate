@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { rootDir } from './utils/index.mjs';
+import { rootDir, isAnalyzeMode } from './utils/index.mjs';
 import { alias } from './configs/index.mjs';
 import * as plugins from './plugins/index.mjs';
 import * as rules from './rules/index.mjs';
@@ -17,6 +17,7 @@ export default {
     entry: [join(rootDir, 'src/index.ts')],
     output: {
         path: join(rootDir, 'build/dist'),
+        publicPath: '/',
     },
     cache: {
         type: 'filesystem',
@@ -40,7 +41,8 @@ export default {
         plugins.providePlugin,
         plugins.environmentPlugin,
         plugins.copyWebpackPlugin,
-    ],
+        isAnalyzeMode && plugins.bundleAnalyzerPlugin,
+    ].filter(Boolean),
     resolve: {
         alias,
         extensions: ['.tsx', '.ts', '.js', '.jsx'],

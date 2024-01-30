@@ -1,5 +1,4 @@
 import { devServerConfig } from './configs/index.mjs';
-import { isServer } from './utils/index.mjs';
 import * as plugins from './plugins/index.mjs';
 
 export default {
@@ -12,5 +11,5 @@ export default {
     target: 'web',
     devtool: 'cheap-module-source-map',
     devServer: devServerConfig,
-    plugins: [isServer && plugins.reactRefreshPlugin].filter(Boolean),
+    plugins: [plugins.reactRefreshPlugin].filter(Boolean),
 };
