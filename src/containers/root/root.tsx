@@ -16,10 +16,23 @@ const Root: React.FunctionComponent<{}> = observer(() => {
     React.useEffect(() => {
         init();
     }, [init]);
+
+    const applicationState = (() => {
+        switch (state) {
+            case RootState.Initialization:
+                return <Loader />;
+            case RootState.Initialized:
+                return <Layout>{routing}</Layout>;
+            case RootState.InitializationError:
+            default:
+                return null;
+        }
+    })();
+
     return (
         <>
             <CssBaseline /> {/* apply normalize.css */}
-            {state === RootState.Initialization ? <Loader /> : <Layout>{routing}</Layout>}
+            {applicationState}
         </>
     );
 });

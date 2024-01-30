@@ -31,12 +31,12 @@ export const Main: React.FunctionComponent<{}> = observer(() => {
     return (
         <>
             <Typography style={{ marginTop: 20, marginBottom: 20 }} variant="h4">
-                {t('main:project_name')}
+                {t('main.project_name')}
             </Typography>
             <Grid container>
                 <Grid item xs={12}>
                     <Typography style={{ marginTop: 20, marginBottom: 20 }} variant="h6">
-                        {t('main:enter_task_name')}
+                        {t('main.enter_task_name')}
                     </Typography>
                     <DynamicFormGenerator
                         schema={schema}

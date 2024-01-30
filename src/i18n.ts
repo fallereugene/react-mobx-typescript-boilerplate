@@ -1,20 +1,19 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import * as localeResources from './locales';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import Backend from 'i18next-http-backend';
 
-const resources = {
-    ...localeResources,
-} as const;
-
-export const availableLanguages = Object.keys(resources);
-
-i18n.use(initReactI18next).init({
-    debug: process.env.ENV !== 'production' && process.env.NODE_ENV !== 'test',
-    fallbackLng: 'ru',
-    defaultNS: 'common',
-    returnNull: false,
-    resources,
-    initImmediate: false,
-});
+i18n.use(Backend)
+    .use(LanguageDetector)
+    .use(initReactI18next)
+    // init i18next
+    // for all options read: https://www.i18next.com/overview/configuration-options
+    .init({
+        // более детальная информация по опциям определения языковой принадлежности
+        // https://github.com/i18next/i18next-browser-languageDetector?tab=readme-ov-file#detector-options
+        detection: {},
+        debug: process.env.ENV !== 'production' && process.env.NODE_ENV !== 'test',
+        fallbackLng: 'ru',
+    });
 
 export default i18n;

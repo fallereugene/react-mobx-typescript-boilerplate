@@ -7,7 +7,7 @@ export class Todo extends ModuleAbstract {
     }
 
     async createTask(data: Partial<Task>) {
-        return super.post(`/todos`, data);
+        return super.post<Task>(`/todos`, data);
     }
 
     async deleteTask(id: string | number) {

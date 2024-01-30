@@ -23,5 +23,6 @@ module.exports = {
         docs: 'Documentation',
         change: 'Changes',
         test: 'Tests',
+        revert: 'Reverts',
     },
 };

@@ -15,3 +15,8 @@ server
 *.md
 *.http
 *.hbs
+__models__
+*.yml
+*.yaml
+*.conf
+*.example

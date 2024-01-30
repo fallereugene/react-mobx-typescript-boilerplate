@@ -1,42 +1,125 @@
-import React from 'react';
-import MUIAlert, { AlertProps } from '@mui/material/Alert';
-import Stack, { StackProps } from '@mui/material/Stack';
+import React, { useEffect, useState } from 'react';
+import MUIAlert, { AlertProps as MUIAlertProps } from '@mui/material/Alert';
+import MUITypography from '@mui/material/Typography';
+import MUISnackbar from '@mui/material/Snackbar';
+import MUIButton, { ButtonProps as MUIButtonProps } from '@mui/material/Button';
+import { SxProps } from '@/contracts/theme';
 
-interface IAlert {
+export type AlertProps = {
     /**
-     * Displayed text
+     * Отображаемый текст
      */
-    text: string;
+    text: string | JSX.Element | JSX.Element[];
     /**
-     * Optional css class name
+     * Автоскрытие информационной плашки
      */
-    className?: string;
+    autoHideDuration?: number;
     /**
-     * The alert offers four severity levels that set a distinctive icon and color.
+     * Опциональный заголовок
+     */
+    header?: string;
+    /**
+     * Информационная плашка может иметь 4 состояния: warning | error | success | info
      * @default success
      */
-    severity?: AlertProps['severity'];
+    severity?: MUIAlertProps['severity'];
     /**
-     * The `sx` prop is a shortcut for defining custom style that has access to the theme.
+     * Переданный коллбэк на закрытие информационной плашки
      */
-    sx?: StackProps['sx'];
+    onClose?(): void;
     /**
-     * A wide range of shorthand responsive margin and padding utility classes to modify an element's appearance.
+     * Переданный коллбэк, который будет отображен как кнопка
      */
-    spacing?: StackProps['spacing'];
-}
+    action?: {
+        text: string;
+        callback(): void;
+        variant?: MUIButtonProps['variant'];
+    };
+    /**
+     * Опциональные css стили
+     */
+    sx?: SxProps;
+    /**
+     * Признак того, должен ли использоваться компонент как снэкбар
+     * @default true
+     */
+    snack?: boolean;
+};
+
+const baseStyles: SxProps = {
+    minWidth: '475px',
+    '& .MuiAlert-root': {
+        width: '100%',
+        display: 'flex',
+        '& .MuiAlert-message': {
+            padding: '8px 70px 8px 0',
+        },
+        '& .MuiTypography-root': {
+            color: 'inherit',
+        },
+    },
+    '& .MuiAlert-message': {
+        '& .MuiTypography-root': {
+            color: 'inherit',
+        },
+    },
+    '& .MuiButton-root': {
+        position: 'absolute',
+        top: '7px',
+        right: '43px',
+        color: 'inherit',
+    },
+    '& .alert': {
+        '&-header': {
+            fontWeight: 'bold',
+        },
+    },
+};
 
 /**
- * An alert displays a short, important message in a way that
- * attracts the user's attention without interrupting the user's task.
+ * Компонент представляет собой простую нотификацию и отображается в виде короткого
+ * сообщения пользователю без.
  */
-const Alert: React.FunctionComponent<IAlert> = (props) => {
-    const { text, severity = 'success', className, sx, spacing } = props;
-    return (
-        <Stack className={className} sx={sx} spacing={spacing}>
-            <MUIAlert severity={severity}>{text}</MUIAlert>
-        </Stack>
+const Alert: React.FunctionComponent<AlertProps> = (props) => {
+    const { sx, text, header, severity, autoHideDuration, onClose, action, snack = true } = props;
+    const [timeRemaining, updateTimeRemaining] = useState((autoHideDuration ?? 0) / 1000);
+
+    useEffect(() => {
+        autoHideDuration && typeof onClose === 'function' && timeRemaining === 0 && onClose();
+    }, [timeRemaining, autoHideDuration, onClose]);
+
+    useEffect(() => {
+        const timeoutId = setInterval(() => {
+            updateTimeRemaining((prevValue) => prevValue - 1);
+        }, 1000);
+        return () => {
+            timeoutId && clearTimeout(timeoutId);
+        };
+    }, []);
+
+    const baseAlert = (
+        <MUIAlert sx={{ ...baseStyles, ...sx }} onClose={onClose} severity={severity}>
+            <MUITypography className="alert alert-header">{header}</MUITypography>
+            <MUITypography className="alert alert-content" component="div">
+                {text}
+            </MUITypography>
+            {action && (
+                <MUIButton onClick={action.callback} variant={action.variant}>
+                    {action.text}
+                </MUIButton>
+            )}
+        </MUIAlert>
     );
+
+    if (snack) {
+        return (
+            <MUISnackbar open sx={{ ...baseStyles, ...sx }}>
+                {baseAlert}
+            </MUISnackbar>
+        );
+    }
+
+    return baseAlert;
 };
 
 export { Alert };

@@ -1,7 +1,10 @@
 {
     "common": {
         "delete": "Delete",
-        "confirm": "Confirm"
+        "confirm": "Confirm",
+        "change_language_counter_zero": "Locale was not changed",
+        "change_language_counter_one": "Locale was changed 1 time",
+        "change_language_counter_other": "Locale was changed {{count}} times"
     },
     "main": {
         "project_name": "ToDo List",

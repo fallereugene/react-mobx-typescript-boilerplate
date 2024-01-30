@@ -17,7 +17,6 @@ export default {
     entry: [join(rootDir, 'src/index.ts')],
     output: {
         path: join(rootDir, 'build/dist'),
-        publicPath: '/',
     },
     cache: {
         type: 'filesystem',
