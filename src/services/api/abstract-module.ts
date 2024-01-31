@@ -127,9 +127,13 @@ export abstract class ModuleAbstract {
      * @param xCorrelationID GUID, отправленный в качестве заголовка
      */
     private static async invoke(pendingMethod: Promise<RequestResult>, xCorrelationID: string) {
-        const requestResult = await pendingMethod;
-        const { status, headers, error, data } = requestResult;
-        return { status, xCorrelationID, headers, data, error };
+        try {
+            const requestResult = await pendingMethod;
+            const { statusCode, headers, error, data } = requestResult;
+            return { statusCode, xCorrelationID, headers, data, error };
+        } catch (e) {
+            return e;
+        }
     }
 
     /**

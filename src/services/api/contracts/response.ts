@@ -1,14 +1,15 @@
 import { AxiosError } from 'axios';
+import { StatusCodes } from 'http-status-codes';
 
-export type BaseRequestResult = {
+export type BaseRequestResult<TStatusCode extends StatusCodes = any> = {
     headers: Record<string, any>;
-    status: number;
+    statusCode: TStatusCode;
 };
 
 export type ResponseSuccess<T = any> = {
     data: T;
     error: null;
-} & BaseRequestResult;
+} & BaseRequestResult<StatusCodes.OK | StatusCodes.NO_CONTENT>;
 
 export type ResponseError = {
     error: AxiosError;
