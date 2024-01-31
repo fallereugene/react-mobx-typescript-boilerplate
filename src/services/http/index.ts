@@ -93,7 +93,7 @@ export class HttpService {
     private static responseSuccessHandler(response: AxiosResponse<any>) {
         const { status, data, headers } = response;
         return {
-            status,
+            statusCode: status,
             data,
             headers,
             error: null,

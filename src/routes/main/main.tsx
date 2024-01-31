@@ -1,32 +1,33 @@
-import React from 'react';
-import { observer } from 'mobx-react-lite';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { DynamicFormGenerator } from '@components/dynamic-form-generator';
-import { Loader } from '@components/loader';
 import { Task } from './components/task';
 import { schema } from './schema';
-import { useFetch, useStore } from '@/hooks';
+import { useApi } from '@/hooks';
 
-export const Main: React.FunctionComponent<{}> = observer(() => {
-    const {
-        mainStore: { tasks, init, deleteTask, createTask },
-    } = useStore();
-    const [initFetchState, initRequest, fetchStates] = useFetch(init);
+export type FormikProps = {
+    title: string;
+};
+
+export const Main: React.FunctionComponent<{}> = () => {
     const { t, i18n } = useTranslation();
+    const { getList, resultData: tasks } = useApi('todo', 'getList');
+    const { createTask, fetchingState: createTaskState, fetchStates } = useApi('todo', 'createTask');
+    const { deleteTask, fetchingState: deleteTaskState } = useApi('todo', 'deleteTask');
 
     React.useEffect(() => {
-        initRequest();
-    }, [initRequest]);
+        getList();
+    }, [getList]);
 
-    if (tasks === null) {
-        return (
-            <Grid container direction="row" justifyContent="center" alignItems="center" padding={2}>
-                <Loader />
-            </Grid>
-        );
-    }
+    useEffect(() => {
+        createTaskState === fetchStates.Success && getList();
+    }, [getList, createTaskState, fetchStates.Success]);
+
+    useEffect(() => {
+        deleteTaskState === fetchStates.Success && getList();
+    }, [getList, deleteTaskState, fetchStates.Success]);
 
     return (
         <>
@@ -41,25 +42,24 @@ export const Main: React.FunctionComponent<{}> = observer(() => {
                     <DynamicFormGenerator
                         schema={schema}
                         currentLocale={i18n.language}
-                        onSubmit={(data: { task: string }) => {
-                            createTask(data.task);
-                        }}
-                        disabled={[fetchStates.Success, fetchStates.Error].includes(initFetchState)}
+                        onSubmit={(data: { task: string }) => createTask({ title: data.task })}
+                        disabled={[deleteTaskState, createTaskState].includes(fetchStates.Fetching)}
                     />
                 </Grid>
             </Grid>
             <Grid container spacing={2} padding={1} direction="row" alignItems="center">
-                {tasks.map((item) => (
-                    <Task
-                        key={item.id}
-                        {...item}
-                        onDelete={() => deleteTask(item.id)}
-                        disabled={[fetchStates.Success, fetchStates.Error].includes(initFetchState)}
-                    />
-                ))}
+                {tasks &&
+                    tasks.map((item) => (
+                        <Task
+                            key={item.id}
+                            onDelete={() => deleteTask(item.id)}
+                            disabled={[deleteTaskState, createTaskState].includes(fetchStates.Fetching)}
+                            {...item}
+                        />
+                    ))}
             </Grid>
         </>
     );
-});
+};
 
 export default Main;

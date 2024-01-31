@@ -5,7 +5,7 @@ import { generateApi } from 'swagger-typescript-api';
 const AVAILABLE_EXTENSIONS = ['yaml', 'yml', 'json'];
 const IGNORE_FILES = [];
 const specPath = path.join(process.cwd(), 'specs');
-const outputPath = path.join('src/services/api/__models');
+const outputPath = path.join(`${process.env.FOLDER}/__models`.replace(/([^:])(\/\/+)/g, '$1/'));
 
 /**
  * Валидация расширений файлов

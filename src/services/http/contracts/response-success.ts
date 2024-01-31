@@ -1,8 +1,8 @@
 import { AxiosHeaders } from 'axios';
 
 export type ResponseSuccess = {
+    statusCode: number;
     data: any;
-    error: null;
     headers: AxiosHeaders['headers'];
-    status: number;
+    error: null;
 };
