@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { DynamicFormGenerator } from '@components/dynamic-form-generator';
+import { TextField, Button } from '@components/form';
 import { Task } from './components/task';
-import { schema } from './schema';
 import { useApi } from '@/hooks';
 
 export type FormikProps = {
@@ -16,6 +17,20 @@ export const Main: React.FunctionComponent<{}> = () => {
     const { getList, resultData: tasks } = useApi('todo', 'getList');
     const { createTask, fetchingState: createTaskState, fetchStates } = useApi('todo', 'createTask');
     const { deleteTask, fetchingState: deleteTaskState } = useApi('todo', 'deleteTask');
+
+    const formik = useFormik<FormikProps>({
+        initialValues: {
+            title: '',
+        },
+        validationSchema: Yup.object({
+            title: Yup.string()
+                .required(() => i18n.t('error.required_field'))
+                .min(6, ({ min }) => i18n.t('error.min_symbols', { symbols: min })),
+        }),
+        onSubmit(data) {
+            createTask(data);
+        },
+    });
 
     React.useEffect(() => {
         getList();
@@ -36,15 +51,19 @@ export const Main: React.FunctionComponent<{}> = () => {
             </Typography>
             <Grid container>
                 <Grid item xs={12}>
-                    <Typography style={{ marginTop: 20, marginBottom: 20 }} variant="h6">
-                        {t('main.enter_task_name')}
-                    </Typography>
-                    <DynamicFormGenerator
-                        schema={schema}
-                        currentLocale={i18n.language}
-                        onSubmit={(data: { task: string }) => createTask({ title: data.task })}
-                        disabled={[deleteTaskState, createTaskState].includes(fetchStates.Fetching)}
-                    />
+                    <form noValidate onSubmit={formik.handleSubmit}>
+                        <TextField
+                            name="title"
+                            size="small"
+                            value={formik.values.title}
+                            label={t('control.main_input_label')}
+                            onChange={formik.handleChange}
+                            error={formik.touched.title && !!formik.errors.title}
+                            helperText={(formik.touched.title && formik.errors.title) || t('main.enter_task_name')}
+                            fullWidth
+                        />
+                        <Button onClick={() => formik.handleSubmit()}>{t('common.confirm')}</Button>
+                    </form>
                 </Grid>
             </Grid>
             <Grid container spacing={2} padding={1} direction="row" alignItems="center">
