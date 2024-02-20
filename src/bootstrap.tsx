@@ -5,7 +5,7 @@ import { QueryParamProvider } from 'use-query-params';
 import { ReactRouter6Adapter } from 'use-query-params/adapters/react-router-6';
 import { enableLogging } from 'mobx-logger';
 import { configure } from 'mobx';
-import ErrorBoundary from '@components/error-boundary';
+import { ErrorBoundary } from '@components/error-boundary';
 import { Root } from '@containers/root';
 import { ThemeProvider } from '@mui/material';
 import { Store } from '@services/store';

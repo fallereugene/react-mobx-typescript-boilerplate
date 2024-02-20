@@ -5,6 +5,10 @@ import LoadingButton, { LoadingButtonProps } from '@mui/lab/LoadingButton';
 
 export type ButtonProps = React.PropsWithChildren<{
     /**
+     * Текст кнопки
+     */
+    text?: string;
+    /**
      * Вариант кнопки
      * @default contained
      */
@@ -67,6 +71,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
     sx,
     href,
     className,
+    text,
     children,
     onClick,
     ...restProps
@@ -83,7 +88,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
             onClick={onClick}
             {...restProps}
         >
-            {children}
+            {text || children}
         </LoadingButton>
     );
 

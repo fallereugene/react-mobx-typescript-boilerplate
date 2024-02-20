@@ -78,7 +78,7 @@ const baseStyles: SxProps = {
 
 /**
  * Компонент представляет собой простую нотификацию и отображается в виде короткого
- * сообщения пользователю без.
+ * сообщения пользователю.
  */
 const Alert: React.FunctionComponent<AlertProps> = (props) => {
     const { sx, text, header, severity, autoHideDuration, onClose, action, snack = true } = props;

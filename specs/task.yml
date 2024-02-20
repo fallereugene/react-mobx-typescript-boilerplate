@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-    title: API сервиса AVCAll
+    title: ''
     version: 1.0.1
 
     description: |
@@ -38,7 +38,7 @@ servers:
     - url: '/api/v1/'
 
 paths:
-    /todos/:
+    /tasks/:
         get:
             tags:
                 - Todos
@@ -91,7 +91,7 @@ paths:
                     $ref: '#/components/responses/500'
                 '503':
                     $ref: '#/components/responses/503'
-    /todos/{todoId}:
+    /tasks/{todoId}:
         delete:
             tags:
                 - Todos

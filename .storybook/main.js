@@ -21,6 +21,7 @@ const config = {
             '@services': path.resolve(__dirname, '../src/services/'),
             '@assets': path.resolve(__dirname, '../src/assets/'),
             '@utils': path.resolve(__dirname, '../src/utils/index'),
+            '@storybook-utils': path.resolve(__dirname, '../.storybook/utils'),
         };
         return config;
     },

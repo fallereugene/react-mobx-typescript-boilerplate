@@ -1,7 +1,7 @@
 import React from 'react';
 import MUITextField, { TextFieldProps as MUITextFieldProps } from '@mui/material/TextField';
 import MUIInputAdornment, { InputAdornmentProps as MUIInputAdornmentProps } from '@mui/material/InputAdornment';
-import { sx } from './styles';
+import InputMask, { Props as InputMaskProps } from 'react-input-mask';
 
 export type TextFieldProps = {
     /**
@@ -19,7 +19,7 @@ export type TextFieldProps = {
     /**
      * Значение по умолчанию. Рекомендуется для контролируемого компонента.
      */
-    value?: string;
+    value?: InputMaskProps['value'];
     /**
      * Вариант использования компонента.
      * @default outlined
@@ -108,6 +108,29 @@ export type TextFieldProps = {
      */
     inputRef?: MUITextFieldProps['inputRef'];
     /**
+     * Маска ввода:
+     * * `9`: `0-9`
+     * * `a`: `A-Z, a-z`
+     * * `\*`: `A-Z, a-z, 0-9`
+     * Любой символ может быть разделен бэкслэшем.
+     * Например, в случае нередактируемых/неудаляемых символов, маска может иметь следующий вид:
+     *  `mask="+4\\9 99 999 99"` or `mask={"+4\\\\9 99 999 99"}`
+     */
+    mask?: InputMaskProps['mask'];
+    /**
+     * Переданное регулярное выражение, в разрезе которого  проверяется введенная строка.
+     * В случае, если введенное значение не удовлетворяет регулярному выражению,
+     * переданный коллбэк onChange не будет вызван
+     */
+    pattern?: RegExp;
+    /**
+     * Символы, которыми будет заполняться невведенное пользователем значение при использовании маски.
+     * Заполняются только редактируемые символы. Дефолтное значение - "_".
+     * Character to cover unfilled editable parts of mask. Default character is "_".
+     * Если значение установлено в null, то незаполненные части маски останутся пустыми как при обычном поле ввода.
+     */
+    maskChar?: InputMaskProps['maskChar'];
+    /**
      * Опциональные стили, переопределяющие дефолтные
      */
     sx?: MUITextFieldProps['sx'];
@@ -136,6 +159,9 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
     InputProps,
     fieldRef,
     inputRef,
+    mask,
+    maskChar,
+    pattern,
     ...restProps
 }) => {
     const getInputProps = () => {
@@ -168,11 +194,27 @@ export const TextField: React.FunctionComponent<TextFieldProps> = ({
             hiddenLabel={hiddenLabel}
             autoComplete="off"
             InputProps={getInputProps()}
-            sx={sx}
         />
     );
 
+    if (mask && !pattern) {
+        return (
+            <InputMask {...restProps} mask={mask} maskChar={maskChar}>
+                {textField as any}
+            </InputMask>
+        );
+    }
+
     return textField({
         ...restProps,
+        onChange: (e) => {
+            if (e.target.value && pattern) {
+                if (pattern.test(e.target.value)) {
+                    restProps.onChange && restProps.onChange(e);
+                }
+                return;
+            }
+            restProps.onChange && restProps.onChange(e);
+        },
     });
 };

@@ -1,6 +1,7 @@
 {
     "common": {
         "delete": "Удалить",
+        "edit": "Редактировать",
         "confirm": "Подтвердить",
         "change_language_counter_zero": "Языковая локаль не изменялась",
         "change_language_counter_one": "Языковая локаль изменялась {{count}} раз",

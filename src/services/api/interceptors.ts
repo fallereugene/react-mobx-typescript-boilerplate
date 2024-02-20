@@ -6,6 +6,11 @@ interface IConfig {
     onResponseError?(error: AxiosError): void;
 }
 
+/**
+ * Интерцепторы запросов/ответов
+ * @param http Сервис http
+ * @param config Конфигурация
+ */
 export const setInterceptors = (http: typeof httpService, config: IConfig) => {
     const { service } = http;
     const { onResponseError } = config;

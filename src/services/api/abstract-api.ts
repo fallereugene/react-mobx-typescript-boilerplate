@@ -7,7 +7,7 @@ export abstract class ApiAbstract {
         headers: {},
     };
 
-    constructor(private readonly http: HttpService) {}
+    constructor(protected http: HttpService) {}
 
     configure(config: Partial<ApiConfig>) {
         Object.assign(this.config, config);

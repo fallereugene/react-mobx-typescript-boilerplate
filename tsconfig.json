@@ -25,7 +25,7 @@
             "@services/*": ["src/services/*"],
             "@assets/*": ["src/assets/*"],
             "@utils": ["src/utils/index"],
-            "@storybook-helpers": [".storybook/utils"]
+            "@storybook-utils": [".storybook/utils"]
         },
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,

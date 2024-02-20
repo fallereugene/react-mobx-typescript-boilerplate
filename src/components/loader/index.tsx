@@ -3,20 +3,21 @@ import CircularProgress, { CircularProgressProps } from '@mui/material/CircularP
 import Box from '@mui/material/Box';
 import { SxProps } from '@/contracts/theme';
 
-export interface ILoaderProps extends CircularProgressProps {
+export type LoaderProps = CircularProgressProps & {
     /**
-     * Optional css class name
+     * Опциональный css-класс
      */
     className?: string;
     /**
+     * Вариант прогресс-бара
      * @default indeterminate
      */
     variant?: CircularProgressProps['variant'];
     /**
-     * The `sx` prop is a shortcut for defining custom style that has access to the theme.
+     * Опциональные css-стили
      */
     sx?: SxProps;
-}
+};
 
 const baseStyles: SxProps = {
     position: 'absolute',
@@ -30,10 +31,9 @@ const baseStyles: SxProps = {
 };
 
 /**
- * Progress indicators commonly known as spinners, express an unspecified wait time or display the length of a process.
- * Circular progress
+ * Циклический прогресс-бар. Показывается во время загрузки каких-либо данных.
  */
-const Loader: React.FunctionComponent<ILoaderProps> = (props) => {
+export const Loader: React.FunctionComponent<LoaderProps> = (props) => {
     const { variant = 'indeterminate', sx, className } = props;
     return (
         <Box sx={{ ...baseStyles, ...sx }} className={className}>
@@ -41,5 +41,3 @@ const Loader: React.FunctionComponent<ILoaderProps> = (props) => {
         </Box>
     );
 };
-
-export { Loader };

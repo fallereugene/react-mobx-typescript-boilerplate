@@ -8,7 +8,7 @@ import { RootState } from './constants';
 import { useStore } from '@/hooks';
 import { getRoutes } from './routes';
 
-const Root: React.FunctionComponent<{}> = observer(() => {
+export const Root: React.FunctionComponent<{}> = observer(() => {
     const store = useStore();
     const { state, init } = store.rootStore;
     const routing = useRoutes(getRoutes(store));
@@ -36,5 +36,3 @@ const Root: React.FunctionComponent<{}> = observer(() => {
         </>
     );
 });
-
-export default Root;

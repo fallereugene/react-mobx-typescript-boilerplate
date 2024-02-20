@@ -9,13 +9,11 @@ import { Alert } from '@components/alert';
 import { useStore } from '@/hooks';
 import { globalStyles, rootStyles } from './styles';
 
-type Props = {};
-
-export type LayoutProps = React.PropsWithChildren<Props>;
+export type LayoutProps = React.PropsWithChildren<{}>;
 
 /**
- * Main application layout.
- * It contains general parts: header, footer, content, sidebar, notifications etc.
+ * Основной лэйаут приложения
+ * Содержит основные части: хэдер/футер приложения, контент, сайдбар, нотификации и т.д.
  */
 export const Layout: React.FunctionComponent<LayoutProps> = observer((props) => {
     const { children } = props;

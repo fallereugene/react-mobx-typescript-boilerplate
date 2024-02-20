@@ -9,7 +9,7 @@ import { IConfig } from './services/config/contracts/index.js';
 import { Application } from './application.js';
 import { IController } from './services/controller/contracts/index.js';
 import { ContainerIoC } from './constants/index.js';
-import { TodoController } from './modules/todo/index.js';
+import { TaskController } from './modules/task/index.js';
 import { ExceptionFilter, IExceptionFilter } from './services/error/index.js';
 
 const container = new Container();
@@ -20,7 +20,7 @@ container.bind<ILogger>(ContainerIoC.LoggerService).to(LoggerService).inSingleto
 container.bind<IConfig>(ContainerIoC.ConfigService).to(ConfigService).inSingletonScope();
 
 // регистрация контроллеров
-container.bind<IController>(ContainerIoC.TodoController).to(TodoController).inSingletonScope();
+container.bind<IController>(ContainerIoC.TaskController).to(TaskController).inSingletonScope();
 
 const app = container.get<Application>(ContainerIoC.Application);
 

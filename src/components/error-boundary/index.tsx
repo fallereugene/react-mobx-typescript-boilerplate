@@ -1,10 +1,10 @@
 import React from 'react';
 
-export interface IState {
+export type State = {
     isErrorOccurred: boolean;
-}
+};
 
-export default class ErrorBoundary extends React.Component<React.PropsWithChildren<{}>, IState> {
+export class ErrorBoundary extends React.Component<React.PropsWithChildren<{}>, State> {
     constructor(props: {}) {
         super(props);
         this.state = {

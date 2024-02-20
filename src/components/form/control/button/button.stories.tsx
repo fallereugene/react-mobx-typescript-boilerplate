@@ -1,4 +1,4 @@
-import { CreateTemplate } from '@storybook-helpers';
+import { CreateTemplate } from '@storybook-utils';
 import { Button, ButtonProps } from '.';
 
 export default { component: Button };

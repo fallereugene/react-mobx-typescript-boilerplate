@@ -1,6 +1,6 @@
-import { Todo } from './contracts/index.js';
+import { Task } from '../../../../__models/task/index.js';
 
-export const todos: Todo[] = [
+export const tasks: Task[] = [
     {
         id: '1',
         title: 'delectus aut autem',
@@ -19,11 +19,11 @@ export const todos: Todo[] = [
     {
         id: '4',
         title: 'et porro tempora',
-        completed: true,
+        completed: false,
     },
     {
         id: '5',
         title: 'laboriosam mollitia et enim quasi adipisci quia provident illum',
-        completed: false,
+        completed: true,
     },
 ];

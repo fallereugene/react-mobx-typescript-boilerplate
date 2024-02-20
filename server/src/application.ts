@@ -16,7 +16,7 @@ export class Application {
     constructor(
         @inject(ContainerIoC.LoggerService) private logger: ILogger,
         @inject(ContainerIoC.ConfigService) private config: IConfig,
-        @inject(ContainerIoC.TodoController) private todoController: IController,
+        @inject(ContainerIoC.TaskController) private taskController: IController,
         @inject(ContainerIoC.ExceptionFilter) private exceptionFilter: IExceptionFilter,
     ) {
         this.express = express();
@@ -56,7 +56,7 @@ export class Application {
      * Регистрация роутов
      */
     private initRoutes() {
-        this.express.use(`${this.config.get('BASE_API_URL')}todos/`, this.todoController.router);
+        this.express.use(`${this.config.get('BASE_API_URL')}tasks/`, this.taskController.router);
     }
 
     /**
