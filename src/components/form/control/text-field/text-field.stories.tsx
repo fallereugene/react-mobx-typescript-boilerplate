@@ -1,4 +1,4 @@
-import { CreateTemplate } from '@storybook-helpers';
+import { CreateTemplate } from '@storybook-utils';
 import { TextField, TextFieldProps } from '.';
 
 const defaultProps: TextFieldProps = {
@@ -86,4 +86,5 @@ export const InputWithMask = CreateTemplate(TextField, {
     ...defaultProps,
     label: 'Enter phone number',
     placeholder: 'Enter phone number',
+    mask: '+7(999)9999999',
 });

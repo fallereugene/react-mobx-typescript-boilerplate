@@ -5,5 +5,5 @@ export enum ContainerIoC {
     ConfigService = 'ConfigService',
     DatabaseService = 'DatabaseService',
     ExceptionFilter = 'ExceptionFilter',
-    TodoController = 'TodoController',
+    TaskController = 'TaskController',
 }

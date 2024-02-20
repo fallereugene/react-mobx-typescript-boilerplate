@@ -1,5 +1,5 @@
-import { Todo } from '../models/index.js';
+import { Task } from '../../../__models/task/index.js';
 
 export type Store = {
-    todos: Todo[];
+    tasks: Task[];
 };

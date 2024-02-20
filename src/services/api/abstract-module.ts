@@ -2,6 +2,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { HttpService } from '../http';
 import { ApiConfig, RequestResult } from './contracts';
 
+/**
+ * Абстрактный модуль API
+ */
 export abstract class ModuleAbstract {
     constructor(private readonly httpService: HttpService, private readonly config: ApiConfig) {}
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Api } from '@services/api';
 import { RequestResult } from '@/services/api/contracts';
-import { FetchingState } from '@/containers/root/constants';
+import { FetchingState } from '@/constants';
 import { useStore } from './use-store';
 
 type HookResult<TApiModuleMethod, TRequestResult, TApiModuleMethodName extends string | number | symbol> = {

@@ -11,4 +11,5 @@ export const alias = {
     '@services': resolve(rootDir, './src/services/'),
     '@assets': resolve(rootDir, './src/assets/'),
     '@utils': resolve(rootDir, './src/utils/index'),
+    '@storybook-utils': resolve(rootDir, './.storybook/utils'),
 };

@@ -1,9 +1,9 @@
 import { CreateTemplate } from '../../../.storybook/utils';
-import { Loader, ILoaderProps } from '.';
+import { Loader, LoaderProps } from '.';
 
 export default { component: Loader };
 
-const defaultProps: ILoaderProps = {
+const defaultProps: LoaderProps = {
     variant: 'indeterminate',
     color: 'primary',
 };

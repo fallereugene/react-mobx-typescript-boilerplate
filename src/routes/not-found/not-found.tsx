@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const NotFound: React.FunctionComponent<{}> = () => {
+/**
+ * Компонент, показываемый пользователю в случае, если, например, страница не найдена (не найдено
+ * соответствие url в роутинге)
+ */
+export const NotFound: React.FunctionComponent<{}> = () => {
     return (
         <>
             <h1 style={{ textAlign: `center` }}>
@@ -15,5 +19,3 @@ const NotFound: React.FunctionComponent<{}> = () => {
         </>
     );
 };
-
-export default NotFound;

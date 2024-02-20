@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { TextField, Button } from '@components/form';
+import { TextField } from '@components/form';
+import { Task as ITask } from '@services/api/__models/task';
 import { Task } from './components/task';
-import { useApi } from '@/hooks';
+import { Filter } from './components/filter';
+import { AVAILABLE_FILTER_VALUES } from './constants';
+import { useApi, useQueryParams } from '@/hooks';
 
 export type FormikProps = {
     title: string;
@@ -14,9 +17,19 @@ export type FormikProps = {
 
 export const Main: React.FunctionComponent<{}> = () => {
     const { t, i18n } = useTranslation();
-    const { getList, resultData: tasks } = useApi('todo', 'getList');
-    const { createTask, fetchingState: createTaskState, fetchStates } = useApi('todo', 'createTask');
-    const { deleteTask, fetchingState: deleteTaskState } = useApi('todo', 'deleteTask');
+    const filterMap: { [P in (typeof AVAILABLE_FILTER_VALUES)[number]]: (task: ITask) => boolean } = useMemo(
+        () => ({
+            all: () => true,
+            active: (task) => !task.completed,
+            completed: (task) => task.completed,
+        }),
+        [],
+    );
+    const { add, params } = useQueryParams({ filter: useQueryParams.types.StringParam });
+    const { getList, resultData: tasks } = useApi('task', 'getList');
+    const { createTask, fetchingState: createTaskState, fetchStates } = useApi('task', 'createTask');
+    const { deleteTask, fetchingState: deleteTaskState } = useApi('task', 'deleteTask');
+    const { changeTask, fetchingState: changeTaskState } = useApi('task', 'changeTask');
 
     const formik = useFormik<FormikProps>({
         initialValues: {
@@ -37,12 +50,21 @@ export const Main: React.FunctionComponent<{}> = () => {
     }, [getList]);
 
     useEffect(() => {
+        !params.filter && add({ filter: AVAILABLE_FILTER_VALUES[0] });
+    }, [params.filter, add]);
+
+    useEffect(() => {
         createTaskState === fetchStates.Success && getList();
+        formik.resetForm();
     }, [getList, createTaskState, fetchStates.Success]);
 
     useEffect(() => {
         deleteTaskState === fetchStates.Success && getList();
     }, [getList, deleteTaskState, fetchStates.Success]);
+
+    useEffect(() => {
+        changeTaskState === fetchStates.Success && getList();
+    }, [getList, changeTaskState, fetchStates.Success]);
 
     return (
         <>
@@ -62,23 +84,30 @@ export const Main: React.FunctionComponent<{}> = () => {
                             helperText={(formik.touched.title && formik.errors.title) || t('main.enter_task_name')}
                             fullWidth
                         />
-                        <Button onClick={() => formik.handleSubmit()}>{t('common.confirm')}</Button>
                     </form>
                 </Grid>
+                <Filter
+                    values={AVAILABLE_FILTER_VALUES}
+                    activeFilter={params.filter ?? AVAILABLE_FILTER_VALUES[0]}
+                    onFilterClick={(filter: (typeof AVAILABLE_FILTER_VALUES)[number]) => add({ filter })}
+                />
             </Grid>
             <Grid container spacing={2} padding={1} direction="row" alignItems="center">
                 {tasks &&
-                    tasks.map((item) => (
-                        <Task
-                            key={item.id}
-                            onDelete={() => deleteTask(item.id)}
-                            disabled={[deleteTaskState, createTaskState].includes(fetchStates.Fetching)}
-                            {...item}
-                        />
-                    ))}
+                    tasks
+                        .filter(filterMap[params.filter as (typeof AVAILABLE_FILTER_VALUES)[number]] ?? filterMap.all)
+                        .map((item) => (
+                            <Task
+                                key={item.id}
+                                onDelete={() => deleteTask(item.id)}
+                                onChangeTask={(data: ITask) => changeTask(item.id, data)}
+                                disabled={[deleteTaskState, createTaskState, changeTaskState].includes(
+                                    fetchStates.Fetching,
+                                )}
+                                {...item}
+                            />
+                        ))}
             </Grid>
         </>
     );
 };
-
-export default Main;

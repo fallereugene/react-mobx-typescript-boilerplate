@@ -1,11 +1,11 @@
 import { injectable } from 'inversify';
 import { IStoreService, Store } from './contracts/index.js';
-import { todos } from './models/index.js';
+import { tasks } from './models/index.js';
 
 @injectable()
 export class StoreService implements IStoreService {
     private store: Store = {
-        todos,
+        tasks,
     };
 
     get data() {
@@ -14,6 +14,5 @@ export class StoreService implements IStoreService {
 
     updateStore(fullStore: Store) {
         this.store = fullStore;
-        this.store.todos.filter((item) => item);
     }
 }
