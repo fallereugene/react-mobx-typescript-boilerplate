@@ -12,7 +12,7 @@ const config = {
         sortAttributes: true,
         sortClassName: true,
     },
-    template: join(rootDir, `./src/index.html`),
+    template: join(rootDir, './public/index.html'),
     meta: {
         viewport: 'width=device-width, initial-scale=1',
     },

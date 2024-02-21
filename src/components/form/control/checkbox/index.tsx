@@ -43,7 +43,15 @@ export const Checkbox: React.FunctionComponent<CheckboxProps> = ({
     text,
     onChange,
 }) => {
-    const Checkbox = <MUICheckbox name={name} checked={checked} disabled={disabled} onChange={onChange} />;
+    const Checkbox = (
+        <MUICheckbox
+            aria-label="is-complete-sign"
+            name={name}
+            checked={checked}
+            disabled={disabled}
+            onChange={onChange}
+        />
+    );
     const additionalText = text && <MUIFormHelperText>{text}</MUIFormHelperText>;
 
     if (label) {

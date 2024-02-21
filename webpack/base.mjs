@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { rootDir, isAnalyzeMode } from './utils/index.mjs';
+import { rootDir, isAnalyzeMode, enableServiceWorkerInDevelopmentMode, mode } from './utils/index.mjs';
 import { alias } from './configs/index.mjs';
 import * as plugins from './plugins/index.mjs';
 import * as rules from './rules/index.mjs';
@@ -41,6 +41,8 @@ export default {
         plugins.providePlugin,
         plugins.environmentPlugin,
         plugins.copyWebpackPlugin,
+        plugins.webpackManifestPlugin,
+        enableServiceWorkerInDevelopmentMode && mode === 'development' && plugins.workboxWebpackPlugin,
         isAnalyzeMode && plugins.bundleAnalyzerPlugin,
     ].filter(Boolean),
     resolve: {

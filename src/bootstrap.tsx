@@ -12,10 +12,12 @@ import { Store } from '@services/store';
 import { Api, setInterceptors } from '@services/api';
 import httpService from '@services/http';
 import { Config } from '@services/config';
+import logger from '@services/logger';
+import { ServiceWorker } from '@services/service-worker';
 import theme from '@/theme';
 import './i18n';
 
-const { IS_PRODUCTION_MODE, BASE_API_URL } = Config.getConfig();
+const { IS_PRODUCTION_MODE, BASE_API_URL, PWA_MODE, SW_FILE_NAME, SW_DEVELOPMENT_MODE_ENABLE } = Config.getConfig();
 
 if (!IS_PRODUCTION_MODE) {
     enableLogging({
@@ -31,8 +33,18 @@ if (!IS_PRODUCTION_MODE) {
     });
 }
 
-export const StoreContext = React.createContext<Store>({} as Store);
+const StoreContext = React.createContext<Store>({} as Store);
 const store = new Store(new Api(httpService).configure({ baseUrl: BASE_API_URL }));
+const sw = new ServiceWorker(`${SW_FILE_NAME}.js`, logger);
+
+// Регистрация сервис-воркеров и активация поддержки PWA-режима.
+// Файл сервис-воркера обрабатывается и генерируется в процессе сборки проекта.
+// В результате происходит также процесс прекэширования.
+// Название выходного файла может конфигурироваться через переменные окружения.
+if ((IS_PRODUCTION_MODE || SW_DEVELOPMENT_MODE_ENABLE) && PWA_MODE) {
+    sw.register();
+}
+!PWA_MODE && sw.unregister();
 
 setInterceptors(httpService, {
     onResponseError: store.rootStore.responseErrorInterceptor,
@@ -59,3 +71,5 @@ const renderApplication = (Component: React.ElementType) => {
 };
 
 renderApplication(Root);
+
+export { StoreContext };

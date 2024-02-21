@@ -42,6 +42,7 @@ export const Main: React.FunctionComponent<{}> = () => {
         }),
         onSubmit(data) {
             createTask(data);
+            formik.resetForm();
         },
     });
 
@@ -55,7 +56,6 @@ export const Main: React.FunctionComponent<{}> = () => {
 
     useEffect(() => {
         createTaskState === fetchStates.Success && getList();
-        formik.resetForm();
     }, [getList, createTaskState, fetchStates.Success]);
 
     useEffect(() => {

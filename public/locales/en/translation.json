@@ -9,7 +9,10 @@
     },
     "main": {
         "project_name": "ToDo List",
-        "enter_task_name": "Enter task name"
+        "enter_task_name": "Enter task name",
+        "filter_all": "All",
+        "filter_active": "Active",
+        "filter_completed": "Completed"
     },
     "error": {
         "invalid_email": "Invalid email",
