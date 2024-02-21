@@ -47,7 +47,7 @@ export const Task: React.FunctionComponent<TaskProps> = ({
     onDelete,
     onChangeTask,
 }) => {
-    const [isEditing, setState] = useState(false);
+    const [isEditing, setEditingState] = useState(false);
     const { t, i18n } = useTranslation();
 
     const formik = useFormik<FormikProps>({
@@ -60,7 +60,7 @@ export const Task: React.FunctionComponent<TaskProps> = ({
                 .min(6, ({ min }) => i18n.t('error.min_symbols', { symbols: min })),
         }),
         onSubmit(data) {
-            setState(false);
+            setEditingState(false);
             onChangeTask({
                 id,
                 completed,
@@ -104,11 +104,11 @@ export const Task: React.FunctionComponent<TaskProps> = ({
                     text={t(isEditing ? 'common.confirm' : 'common.edit')}
                     onClick={() => {
                         if (isEditing) {
-                            formik.handleSubmit();
+                            formik.values.title === title ? setEditingState(false) : formik.handleSubmit();
                             return;
                         }
                         formik.setFieldValue('title', title);
-                        setState(true);
+                        setEditingState(true);
                     }}
                     disabled={disabled || completed}
                 />

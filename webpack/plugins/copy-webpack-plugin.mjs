@@ -9,7 +9,13 @@ const staticAssets = join(rootDir, 'public');
 // в процессе сборки
 const config = {
     patterns: [
-        { from: staticAssets, to: './' },
+        {
+            from: staticAssets,
+            to: './',
+            globOptions: {
+                ignore: ['**/index.html'],
+            },
+        },
         { from: changelog, to: './' },
     ],
 };

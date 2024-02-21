@@ -3,3 +3,4 @@ export { rootDir } from './root-dir.mjs';
 export { excludeNodeModulesExcept } from './exclude-node-modules-except.mjs';
 export { isSuitableNodeEngine } from './is-suitable-node-engine.mjs';
 export { isAnalyzeMode } from './is-analyze-mode.mjs';
+export { enableServiceWorkerInDevelopmentMode } from './enable-service-worker-in-development-mode.mjs';

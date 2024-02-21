@@ -9,8 +9,11 @@
         "change_language_counter_many": "Языковая локаль изменялась {{count}} раз"
     },
     "main": {
-        "project_name": "Список дел",
-        "enter_task_name": "Введите название задачи"
+        "project_name": "Список задач",
+        "enter_task_name": "Введите название задачи",
+        "filter_all": "Все",
+        "filter_active": "Активные",
+        "filter_completed": "Завершенные"
     },
     "error": {
         "invalid_email": "Некорректный email",
