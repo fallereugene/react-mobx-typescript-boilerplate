@@ -20,6 +20,9 @@ declare global {
             SW_FILE_NAME: string;
             // Регистрация и обработка файла сервис-воркера в development-режиме
             SW_DEVELOPMENT_MODE_ENABLE: string;
+            // Уровень логгирования
+            // Поддерживаются следующие уровни логгирования: error (0), warn (1), info (2), debug (3).
+            LOGLEVEL: string;
         }
     }
 }

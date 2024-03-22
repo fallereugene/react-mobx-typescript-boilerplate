@@ -12,7 +12,7 @@ import { Store } from '@services/store';
 import { Api, setInterceptors } from '@services/api';
 import httpService from '@services/http';
 import { Config } from '@services/config';
-import logger from '@services/logger';
+import { Logger } from '@services/logger';
 import { ServiceWorker } from '@services/service-worker';
 import theme from '@/theme';
 import './i18n';
@@ -33,6 +33,7 @@ if (!IS_PRODUCTION_MODE) {
     });
 }
 
+const logger = new Logger(Config.getConfig().LOGLEVEL);
 const StoreContext = React.createContext<Store>({} as Store);
 const store = new Store(new Api(httpService).configure({ baseUrl: BASE_API_URL }));
 const sw = new ServiceWorker(`${SW_FILE_NAME}.js`, logger);

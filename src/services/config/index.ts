@@ -13,6 +13,7 @@ export class Config {
             PWA_MODE: process.env?.PWA_MODE.toLowerCase() === 'true',
             SW_FILE_NAME: process.env.SW_FILE_NAME ?? 'service-worker',
             SW_DEVELOPMENT_MODE_ENABLE: process.env?.SW_DEVELOPMENT_MODE_ENABLE.toLowerCase() === 'true',
+            LOGLEVEL: process.env.LOGLEVEL ? parseInt(process.env.LOGLEVEL, 10) : undefined,
         };
     }
 }
