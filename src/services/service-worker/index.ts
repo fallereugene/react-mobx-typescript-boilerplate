@@ -25,7 +25,7 @@ export class ServiceWorker {
                     if (!registration) {
                         return;
                     }
-                    this.logger.log('Service worker.', 'Service worker registered successfully.');
+                    this.logger.info('Service worker.', 'Service worker registered successfully.');
                     registration.addEventListener('updatefound', () => {
                         const installingWorker = registration.installing;
                         if (installingWorker == null) {
@@ -37,7 +37,7 @@ export class ServiceWorker {
                                     // At this point, the updated precached content has been fetched,
                                     // but the previous service worker will still serve the older
                                     // content until all client tabs are closed.
-                                    this.logger.log(
+                                    this.logger.info(
                                         'Service worker.',
                                         'New content is available and will be used when all tabs are closed.',
                                     );
@@ -45,19 +45,22 @@ export class ServiceWorker {
                                     // At this point, everything has been precached.
                                     // It's the perfect time to display a
                                     // "Content is cached for offline use." message.
-                                    this.logger.log('Service worker.', 'Content is cached for offline use.');
+                                    this.logger.info('Service worker.', 'Content is cached for offline use.');
                                 }
                             }
                         });
                     });
                 })
                 .catch((error) => {
-                    this.logger.log('Service worker error', 'Something went wrong during service worker registration.');
-                    this.logger.log('Service worker error', error.message);
+                    this.logger.error(
+                        'Service worker error',
+                        'Something went wrong during service worker registration.',
+                    );
+                    this.logger.error('Service worker error', error.message);
                 });
         } catch (e) {
-            this.logger.log('Service worker error', 'Something went wrong.');
-            this.logger.log('Service worker error', e.message);
+            this.logger.error('Service worker error', 'Something went wrong.');
+            this.logger.error('Service worker error', e.message);
         }
     }
 
@@ -67,7 +70,7 @@ export class ServiceWorker {
      */
     unregister() {
         if (!ServiceWorker.IS_SERVICE_AVAILABLE) {
-            this.logger.log('Service worker.', 'No serviceWorker found.');
+            this.logger.info('Service worker.', 'No serviceWorker found.');
             return;
         }
 
@@ -82,11 +85,11 @@ export class ServiceWorker {
                     registration.unregister();
                 }
                 this.clearCache();
-                this.logger.log('Service worker unregister process.', 'Service worker unregistered successfully.');
+                this.logger.info('Service worker unregister process.', 'Service worker unregistered successfully.');
             })
             .catch((error) => {
-                this.logger.log('Service worker error', 'Something went wrong during unregister process.');
-                this.logger.log('Service worker error', error.message);
+                this.logger.error('Service worker error', 'Something went wrong during unregister process.');
+                this.logger.error('Service worker error', error.message);
             });
     }
 
@@ -95,13 +98,13 @@ export class ServiceWorker {
      * Метод вызывается в процессе удаления зарегистрированного сервис-воркера.
      */
     private async clearCache() {
-        this.logger.log('Service worker.', 'Clearing cache store...');
+        this.logger.info('Service worker.', 'Clearing cache store...');
         const cacheKeys = await caches.keys();
 
         // eslint-disable-next-line
         for (const key of cacheKeys) {
             caches.delete(key);
         }
-        this.logger.log('Service worker.', 'Cache store was cleared successfully.');
+        this.logger.info('Service worker.', 'Cache store was cleared successfully.');
     }
 }

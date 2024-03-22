@@ -4,4 +4,5 @@ export type Variables = {
     PWA_MODE: boolean;
     SW_FILE_NAME: string;
     SW_DEVELOPMENT_MODE_ENABLE: boolean;
+    LOGLEVEL?: number;
 };
