@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { TextField } from '@components/form';
@@ -9,14 +8,14 @@ import { Task as ITask } from '@services/api/__models/task';
 import { Task } from './components/task';
 import { Filter } from './components/filter';
 import { AVAILABLE_FILTER_VALUES } from './constants';
-import { useApi, useQueryParams } from '@/hooks';
+import { useApi, useQueryParams, useI18n } from '@/hooks';
 
 export type FormikProps = {
     title: string;
 };
 
 export const Main: React.FunctionComponent<{}> = () => {
-    const { t, i18n } = useTranslation();
+    const { t, i18n } = useI18n();
     const filterMap: { [P in (typeof AVAILABLE_FILTER_VALUES)[number]]: (task: ITask) => boolean } = useMemo(
         () => ({
             all: () => true,

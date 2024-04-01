@@ -3,11 +3,11 @@ import cn from 'classnames';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Grid from '@mui/material/Grid';
-import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { Task as ITask } from '@services/api/__models/task';
 import { Checkbox, Button, TextField } from '@components/form';
+import { useI18n } from '@/hooks';
 
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -48,7 +48,7 @@ export const Task: React.FunctionComponent<TaskProps> = ({
     onChangeTask,
 }) => {
     const [isEditing, setEditingState] = useState(false);
-    const { t, i18n } = useTranslation();
+    const { t, i18n } = useI18n();
 
     const formik = useFormik<FormikProps>({
         initialValues: {
