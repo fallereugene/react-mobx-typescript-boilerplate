@@ -1,4 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
+import { I18nextProvider } from 'react-i18next';
 import ReactDOM from 'react-dom/client';
 import React from 'react';
 import { QueryParamProvider } from 'use-query-params';
@@ -15,7 +16,7 @@ import { Config } from '@services/config';
 import { Logger } from '@services/logger';
 import { ServiceWorker } from '@services/service-worker';
 import theme from '@/theme';
-import './i18n';
+import i18n from './i18n';
 
 const { IS_PRODUCTION_MODE, BASE_API_URL, PWA_MODE, SW_FILE_NAME, SW_DEVELOPMENT_MODE_ENABLE } = Config.getConfig();
 
@@ -61,7 +62,9 @@ const renderApplication = (Component: React.ElementType) => {
                     <ErrorBoundary>
                         <BrowserRouter>
                             <QueryParamProvider adapter={ReactRouter6Adapter}>
-                                <Component />
+                                <I18nextProvider i18n={i18n}>
+                                    <Component />
+                                </I18nextProvider>
                             </QueryParamProvider>
                         </BrowserRouter>
                     </ErrorBoundary>

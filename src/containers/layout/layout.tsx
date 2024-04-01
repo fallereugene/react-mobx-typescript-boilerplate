@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import MUIGlobalStyles from '@mui/material/GlobalStyles';
 import MUIBox from '@mui/material/Box';
-import { observer } from 'mobx-react-lite';
-import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import { Alert } from '@components/alert';
-import { useStore } from '@/hooks';
+import { useStore, useI18n } from '@/hooks';
 import { globalStyles, rootStyles } from './styles';
 
 export type LayoutProps = React.PropsWithChildren<{}>;
@@ -15,11 +13,11 @@ export type LayoutProps = React.PropsWithChildren<{}>;
  * Основной лэйаут приложения
  * Содержит основные части: хэдер/футер приложения, контент, сайдбар, нотификации и т.д.
  */
-export const Layout: React.FunctionComponent<LayoutProps> = observer((props) => {
+export const Layout: React.FunctionComponent<LayoutProps> = (props) => {
     const { children } = props;
     const [languageChangeCounter, updateCounter] = useState(0);
+    const { i18n, t } = useI18n();
     const { notifications, removeNotification } = useStore().rootStore;
-    const { i18n, t } = useTranslation();
 
     return (
         <>
@@ -62,4 +60,4 @@ export const Layout: React.FunctionComponent<LayoutProps> = observer((props) => 
             </MUIBox>
         </>
     );
-});
+};
