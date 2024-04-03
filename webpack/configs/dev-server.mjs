@@ -1,9 +1,13 @@
 import dotenv from 'dotenv';
+import { isAnalyzeMode } from '../utils/index.mjs';
 
 const SERVER_HOST = '127.0.0.1';
 
 export const devServerConfig = {
     historyApiFallback: true,
+    devMiddleware: {
+        writeToDisk: !!isAnalyzeMode,
+    },
     open: true,
     hot: 'only',
     client: {
