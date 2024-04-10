@@ -70,7 +70,7 @@ export const Task: React.FunctionComponent<TaskProps> = ({
     });
 
     return (
-        <>
+        <Grid container lg={12} p={1}>
             <Grid item xs={9} style={{ display: 'flex', alignItems: 'center' }}>
                 <Checkbox
                     checked={completed}
@@ -99,7 +99,7 @@ export const Task: React.FunctionComponent<TaskProps> = ({
                     )}
                 </Item>
             </Grid>
-            <Grid xs={3} item textAlign="right" style={{ display: 'flex', justifyContent: 'end' }}>
+            <Grid xs={12} sm={3} item textAlign="right" style={{ display: 'flex', justifyContent: 'end' }}>
                 <Button
                     text={t(isEditing ? 'common.confirm' : 'common.edit')}
                     onClick={() => {
@@ -114,6 +114,6 @@ export const Task: React.FunctionComponent<TaskProps> = ({
                 />
                 <Button text={t('common.delete')} onClick={onDelete} disabled={disabled} sx={{ marginLeft: '5px' }} />
             </Grid>
-        </>
+        </Grid>
     );
 };

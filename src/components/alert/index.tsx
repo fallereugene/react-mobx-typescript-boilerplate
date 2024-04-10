@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTheme } from '@mui/material';
 import MUIAlert, { AlertProps as MUIAlertProps } from '@mui/material/Alert';
 import MUITypography from '@mui/material/Typography';
 import MUISnackbar from '@mui/material/Snackbar';
@@ -46,8 +47,7 @@ export type AlertProps = {
     snack?: boolean;
 };
 
-const baseStyles: SxProps = {
-    minWidth: '475px',
+const baseStyles: SxProps = (theme) => ({
     '& .MuiAlert-root': {
         width: '100%',
         display: 'flex',
@@ -74,7 +74,10 @@ const baseStyles: SxProps = {
             fontWeight: 'bold',
         },
     },
-};
+    [theme.breakpoints.down('sm')]: {
+        width: '380px',
+    },
+});
 
 /**
  * Компонент представляет собой простую нотификацию и отображается в виде короткого
@@ -83,6 +86,8 @@ const baseStyles: SxProps = {
 const Alert: React.FunctionComponent<AlertProps> = (props) => {
     const { sx, text, header, severity, autoHideDuration, onClose, action, snack = true } = props;
     const [timeRemaining, updateTimeRemaining] = useState((autoHideDuration ?? 0) / 1000);
+    const theme = useTheme();
+    const classes = baseStyles(theme);
 
     useEffect(() => {
         autoHideDuration && typeof onClose === 'function' && timeRemaining === 0 && onClose();
@@ -98,7 +103,7 @@ const Alert: React.FunctionComponent<AlertProps> = (props) => {
     }, []);
 
     const baseAlert = (
-        <MUIAlert sx={{ ...baseStyles, ...sx }} onClose={onClose} severity={severity}>
+        <MUIAlert sx={{ ...classes, ...sx }} onClose={onClose} severity={severity}>
             <MUITypography className="alert alert-header">{header}</MUITypography>
             <MUITypography className="alert alert-content" component="div">
                 {text}

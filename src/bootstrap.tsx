@@ -35,8 +35,8 @@ if (!IS_PRODUCTION_MODE) {
 }
 
 const logger = new Logger(Config.getConfig().LOGLEVEL);
-const StoreContext = React.createContext<Store>({} as Store);
 const store = new Store(new Api(httpService).configure({ baseUrl: BASE_API_URL }));
+const StoreContext = React.createContext<Store>(store);
 const sw = new ServiceWorker(`${SW_FILE_NAME}.js`, logger);
 
 // Регистрация сервис-воркеров и активация поддержки PWA-режима.

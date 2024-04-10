@@ -55,7 +55,7 @@ class RootStore {
     }
 
     async init() {
-        this.setState(RootState.Initialized);
+        setTimeout(() => this.setState(RootState.Initialized), 1000);
     }
 }
 
