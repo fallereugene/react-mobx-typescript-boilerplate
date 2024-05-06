@@ -2,4 +2,5 @@ export enum EnvVariable {
     PORT = 'PORT',
     HOST = 'HOST',
     BASE_API_URL = 'BASE_API_URL',
+    WEB_SOCKET_HUB_CONNECTION_PORT = 'WEB_SOCKET_HUB_CONNECTION_PORT',
 }

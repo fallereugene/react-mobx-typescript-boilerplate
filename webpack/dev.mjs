@@ -8,7 +8,6 @@ export default {
         filename: 'bundle.js',
         chunkFilename: '[name].chunk.js',
     },
-    target: 'web',
     devtool: 'cheap-module-source-map',
     devServer: devServerConfig,
     plugins: [plugins.reactRefreshPlugin].filter(Boolean),

@@ -6,6 +6,7 @@ import { ILogger } from './services/logger/contracts/index.js';
 import { IConfig } from './services/config/contracts/index.js';
 import { IController } from './services/controller/contracts/index.js';
 import { IExceptionFilter } from './services/error/index.js';
+import { IWebSocketService } from './services/web-socket/contracts/index.js';
 import { ContainerIoC } from './constants/index.js';
 import { CommonMiddleware } from './middlewares/index.js';
 
@@ -18,6 +19,7 @@ export class Application {
         @inject(ContainerIoC.ConfigService) private config: IConfig,
         @inject(ContainerIoC.TaskController) private taskController: IController,
         @inject(ContainerIoC.ExceptionFilter) private exceptionFilter: IExceptionFilter,
+        @inject(ContainerIoC.WebSocketService) private ws: IWebSocketService,
     ) {
         this.express = express();
     }
@@ -38,6 +40,7 @@ export class Application {
         this.initMiddlewares();
         this.initRoutes();
         this.initExceptionFilter();
+        this.initSocketConnection();
         this.express.listen(this.config.get('PORT'));
 
         this.logger.info(`Server started on http://localhost:${this.config.get('PORT')}`);
@@ -64,5 +67,12 @@ export class Application {
      */
     private initExceptionFilter() {
         this.express.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
+    }
+
+    /**
+     * Инициализация соединения с вебсокетом
+     */
+    private initSocketConnection() {
+        this.ws.connect();
     }
 }

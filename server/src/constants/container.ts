@@ -3,7 +3,7 @@ export enum ContainerIoC {
     StoreService = 'StoreService',
     LoggerService = 'LoggerService',
     ConfigService = 'ConfigService',
-    DatabaseService = 'DatabaseService',
+    WebSocketService = 'WebSocketService',
     ExceptionFilter = 'ExceptionFilter',
     TaskController = 'TaskController',
 }

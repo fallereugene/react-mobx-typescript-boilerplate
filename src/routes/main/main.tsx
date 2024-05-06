@@ -26,7 +26,7 @@ export const Main: React.FunctionComponent<{}> = () => {
     );
     const { add, params } = useQueryParams({ filter: useQueryParams.types.StringParam });
     const { getList, resultData: tasks } = useApi('task', 'getList');
-    const { createTask, fetchingState: createTaskState, fetchStates } = useApi('task', 'createTask');
+    const { createTask, fetchingState: createTaskState, FetchState } = useApi('task', 'createTask');
     const { deleteTask, fetchingState: deleteTaskState } = useApi('task', 'deleteTask');
     const { changeTask, fetchingState: changeTaskState } = useApi('task', 'changeTask');
 
@@ -54,16 +54,16 @@ export const Main: React.FunctionComponent<{}> = () => {
     }, [params.filter, add]);
 
     useEffect(() => {
-        createTaskState === fetchStates.Success && getList();
-    }, [getList, createTaskState, fetchStates.Success]);
+        createTaskState === FetchState.Success && getList();
+    }, [getList, createTaskState, FetchState.Success]);
 
     useEffect(() => {
-        deleteTaskState === fetchStates.Success && getList();
-    }, [getList, deleteTaskState, fetchStates.Success]);
+        deleteTaskState === FetchState.Success && getList();
+    }, [getList, deleteTaskState, FetchState.Success]);
 
     useEffect(() => {
-        changeTaskState === fetchStates.Success && getList();
-    }, [getList, changeTaskState, fetchStates.Success]);
+        changeTaskState === FetchState.Success && getList();
+    }, [getList, changeTaskState, FetchState.Success]);
 
     return (
         <>
@@ -101,7 +101,7 @@ export const Main: React.FunctionComponent<{}> = () => {
                                 onDelete={() => deleteTask(item.id)}
                                 onChangeTask={(data: ITask) => changeTask(item.id, data)}
                                 disabled={[deleteTaskState, createTaskState, changeTaskState].includes(
-                                    fetchStates.Fetching,
+                                    FetchState.Fetching,
                                 )}
                                 {...item}
                             />

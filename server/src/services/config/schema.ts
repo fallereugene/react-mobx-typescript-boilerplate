@@ -15,6 +15,12 @@ export const configSchema = convict<Schema>({
         env: EnvVariable.HOST,
         default: '127.0.0.1',
     },
+    WEB_SOCKET_HUB_CONNECTION_PORT: {
+        doc: 'Websocket hub connection port',
+        format: String,
+        env: EnvVariable.WEB_SOCKET_HUB_CONNECTION_PORT,
+        default: 8444,
+    },
     BASE_API_URL: {
         doc: 'Base API path',
         format: String,

@@ -70,7 +70,7 @@ export const Task: React.FunctionComponent<TaskProps> = ({
     });
 
     return (
-        <Grid container lg={12} p={1}>
+        <Grid container p={1}>
             <Grid item xs={9} style={{ display: 'flex', alignItems: 'center' }}>
                 <Checkbox
                     checked={completed}
