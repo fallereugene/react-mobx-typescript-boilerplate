@@ -14,7 +14,7 @@ type HookResult<TApiModuleMethod, TRequestResult, TApiModuleMethodName extends s
     // заголовки ответа
     resultHeaders: Record<string, string> | null;
     // доступные состояния запроса
-    fetchStates: typeof FetchingState;
+    FetchState: typeof FetchingState;
     // сброс данных запроса
     reset: () => void;
 } & {
@@ -94,7 +94,7 @@ export const useApi = <
         statusCode,
         resultData,
         resultHeaders,
-        fetchStates: FetchingState,
+        FetchState: FetchingState,
         [moduleMethodName]: invokeRequest,
         reset,
     } as HookResult<TApiModuleMethod, TRequestResult, TApiModuleMethodName>;

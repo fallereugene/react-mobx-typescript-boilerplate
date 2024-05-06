@@ -11,6 +11,8 @@ declare global {
         interface ProcessEnv {
             // Базовый путь API
             BASE_API_URL: string;
+            // Адрес websocket-сервера
+            WEB_SOCKET_HUB_CONNECTION_URL: string;
             // Признак сборки приложения
             IS_PRODUCTION_MODE: boolean;
             // Признак поддержки PWA-режима

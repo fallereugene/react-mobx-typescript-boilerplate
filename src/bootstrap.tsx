@@ -14,11 +14,20 @@ import { Api, setInterceptors } from '@services/api';
 import httpService from '@services/http';
 import { Config } from '@services/config';
 import { Logger } from '@services/logger';
+import { EventBus } from '@services/event-bus';
+import { WebSocketClient } from '@services/event-bus/client';
 import { ServiceWorker } from '@services/service-worker';
 import theme from '@/theme';
 import i18n from './i18n';
 
-const { IS_PRODUCTION_MODE, BASE_API_URL, PWA_MODE, SW_FILE_NAME, SW_DEVELOPMENT_MODE_ENABLE } = Config.getConfig();
+const {
+    IS_PRODUCTION_MODE,
+    BASE_API_URL,
+    WEB_SOCKET_HUB_CONNECTION_URL,
+    PWA_MODE,
+    SW_FILE_NAME,
+    SW_DEVELOPMENT_MODE_ENABLE,
+} = Config.getConfig();
 
 if (!IS_PRODUCTION_MODE) {
     enableLogging({
@@ -35,7 +44,11 @@ if (!IS_PRODUCTION_MODE) {
 }
 
 const logger = new Logger(Config.getConfig().LOGLEVEL);
-const store = new Store(new Api(httpService).configure({ baseUrl: BASE_API_URL }));
+const store = new Store(
+    new Api(httpService).configure({ baseUrl: BASE_API_URL }),
+    new EventBus(new WebSocketClient(logger), WEB_SOCKET_HUB_CONNECTION_URL, logger),
+    logger,
+);
 const StoreContext = React.createContext<Store>(store);
 const sw = new ServiceWorker(`${SW_FILE_NAME}.js`, logger);
 

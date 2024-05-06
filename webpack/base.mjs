@@ -13,7 +13,7 @@ const __dirname = dirname(__filename);
 
 export default {
     context: __dirname,
-    target: 'web',
+    target: ['web', 'es5'],
     entry: [join(rootDir, 'src/index.ts')],
     output: {
         path: join(rootDir, 'build/dist'),

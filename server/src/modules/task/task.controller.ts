@@ -7,6 +7,7 @@ import { ILogger } from '../../services/logger/contracts/index.js';
 import { ControllerBase } from '../../services/controller/index.js';
 import { IConfig } from '../../services/config/contracts/index.js';
 import { IStoreService } from '../../services/store/contracts/index.js';
+import { IWebSocketService } from '../../services/web-socket/contracts/index.js';
 import { HttpMethod } from '../../constants/index.js';
 import { Task } from '../../__models/task/index.js';
 
@@ -22,6 +23,7 @@ export class TaskController extends ControllerBase {
         @inject(ContainerIoC.LoggerService) logger: ILogger,
         @inject(ContainerIoC.ConfigService) configService: IConfig,
         @inject(ContainerIoC.StoreService) storeService: IStoreService,
+        @inject(ContainerIoC.WebSocketService) private ws: IWebSocketService,
     ) {
         super(logger, configService, storeService);
 
@@ -91,6 +93,7 @@ export class TaskController extends ControllerBase {
             tasks: this.storeService.data.tasks.filter((item) => item.id !== req.params.id),
         });
         this.noContent(res);
+        this.sendEvent(req.params.id);
     }
 
     /**
@@ -118,5 +121,18 @@ export class TaskController extends ControllerBase {
             StatusCodes.OK,
             this.storeService.data.tasks.find((item) => item.id === id),
         );
+    }
+
+    private sendEvent(id: string) {
+        setTimeout(() => {
+            this.logger.info('Sending event...');
+            this.ws.getInstance().send(
+                JSON.stringify({
+                    payload: {
+                        id,
+                    },
+                }),
+            );
+        }, 2000);
     }
 }
