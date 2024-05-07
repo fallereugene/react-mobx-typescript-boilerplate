@@ -31,7 +31,7 @@ export default {
         },
     },
     module: {
-        rules: [rules.javascriptRule, rules.typescriptRule, rules.stylesRule, rules.imagesRule, rules.fontsRule],
+        rules: [...Object.values(rules)],
     },
     plugins: [
         plugins.htmlWebpackPlugin,
