@@ -24,11 +24,11 @@ import { StaleWhileRevalidate, NetworkFirst, CacheFirst } from 'workbox-strategi
 import { ExpirationPlugin } from 'workbox-expiration';
 import { registerRoute } from 'workbox-routing';
 import { precacheAndRoute } from 'workbox-precaching';
-import { clientsClaim, skipWaiting } from 'workbox-core';
+import { clientsClaim } from 'workbox-core';
 
 declare const self: ServiceWorkerGlobalScope;
 
-skipWaiting();
+self.skipWaiting();
 clientsClaim();
 
 // Прекэширование всех артефактов, генерируемых в процессе сборки.
